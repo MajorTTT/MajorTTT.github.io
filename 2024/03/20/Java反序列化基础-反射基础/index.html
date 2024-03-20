@@ -4,8 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, MajorT&#39;s Blog">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="Java反序列化基础&amp;反射基础, MajorT&#39;s Blog">
+    <meta name="description" content="乘风破浪会有时，直挂云帆济沧海
+什么是序列化和反序列化？为了java对象在网络介质中传输，将其转化为字节流，并从字节流转化为对象的过程。
+下面举个栗子感受一下：1.首先需要创建一个被操作的类的对象编写一个people类：
+123456789">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +20,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | MajorT&#39;s Blog</title>
+    <title>Java反序列化基础&amp;反射基础 | MajorT&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -332,12 +335,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">Java反序列化基础&amp;反射基础</h1>
                 </div>
             </div>
         </div>
@@ -359,12 +362,29 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java%E5%AE%89%E5%85%A8/">
+                                <span class="chip bg-color">Java安全</span>
+                            </a>
+                        
+                            <a href="/tags/%E4%BB%A3%E7%A0%81/">
+                                <span class="chip bg-color">代码</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Java/" class="post-category">
+                                Java
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -373,21 +393,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-02-22
+                    2024-03-20
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-02-22
+                    2024-03-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    75
+                    1.2k
                 </div>
                 
 
@@ -409,19 +429,27 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+                <p><em><strong>乘风破浪会有时，直挂云帆济沧海</strong></em></p>
+<h1 id="什么是序列化和反序列化？"><a href="#什么是序列化和反序列化？" class="headerlink" title="什么是序列化和反序列化？"></a>什么是序列化和反序列化？</h1><p>为了java对象在网络介质中传输，将其转化为字节流，并从字节流转化为对象的过程。</p>
+<p>下面举个栗子感受一下：<br>1.首先需要创建一个被操作的类的对象<br>编写一个people类：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import java.io.Serializable;</span><br><span class="line">public class People implements Serializable &#123;</span><br><span class="line">	private String name;</span><br><span class="line">	private int age;</span><br><span class="line"></span><br><span class="line">	public People(String name, int age)&#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">		this.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setName(String name)&#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setAge(int age)&#123;</span><br><span class="line">		this.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public String getName()&#123;</span><br><span class="line">		return name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public int getAge()&#123;</span><br><span class="line">		return age;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是一个普通的people类，其中包含name和age属性，构造方法，get，set方法<br>不同的是，这个类实现了Serializable接口，只有实现了该接口的类才能够被序列化和反序列化。<br>2.序列化people类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import java.io.ObjectOutputStream;</span><br><span class="line">import java.io.FileOutputStream;</span><br><span class="line"></span><br><span class="line">	public class Serilizerable &#123;</span><br><span class="line">		public static void main(String[] args) throws Exception&#123;</span><br><span class="line">		People people = new People(&quot;Marry&quot;, 20);</span><br><span class="line">		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(&quot;p1.ser&quot;));</span><br><span class="line">		out.writeObject(people);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>上述代码逻辑：<br>实例化people类；创建一个文件接受序列化数据；将people类序列化输出到p1.ser<br>执行完成后，在IDEA右边栏可以看到生成了一个p1.ser文件，即序列化成功</p>
+<p>3.反序列化p1.ser</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import java.io.FileInputStream;</span><br><span class="line">import java.io.ObjectInputStream;</span><br><span class="line"></span><br><span class="line">public class unSerilizerable &#123;</span><br><span class="line">	public static void main(String[] args) throws Exception&#123;</span><br><span class="line">	ObjectInputStream in = new ObjectInputStream(new FileInputStream(&quot;p1.ser&quot;));</span><br><span class="line">	People p1 = (People)in.readObject();</span><br><span class="line">	System.out.println(p1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码逻辑：<br>读取p1.ser文件字节流并创建一个people对象接收，输出对象p1.<br>执行结果如下：<br><img src="/images/Image1.png" alt="img1"><br>也可以使用p1调用people的get方法：<br><img src="/images/Image2.png" alt="img2"></p>
+<p>4.在反序列化过程中为什么会导致安全问题？<br>由于序列化的数据是用户可控的，导致可能会出现安全问题。<br>这里举一个例子（people类重写了readObject函数，该函数本身存在危险函数）<br>上述情况基本不会在实际情况中出现，此处仅举例使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private void readObject(java.io.ObjectInputStream a) throws Exception&#123;</span><br><span class="line">	java.lang.Runtime.getRuntime().exec(&quot;calc.exe&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在people类中添加上述方法后，反序列化执行一下：<br><img src="/images/Image3.png" alt="img3"><br>成功弹窗！<br>除了上述people类直接调用readObject方法，并且方法中存在危险函数的情况，还可能有一下三种可能。<br>    1.入口类中调用包含了可控类，这个类中有危险方法，readObject时调用；<br>    2.入口类中包含可控类，可控类中调用了其他类的危险方法，readObject时调用；<br>    3.构造函数或者静态代码加载时隐式执行。<br>以上总结参考白日梦组长视频，也是我java安全的开始，感谢组长。<br>接下来学习利用URLDNS链的前置知识——反射。</p>
+<h1 id="什么是反射？"><a href="#什么是反射？" class="headerlink" title="什么是反射？"></a>什么是反射？</h1><p>反射就像一面镜子，映照出类的属性和方法等，可以在运行时动态的修改它们的值以及调用类的方法。</p>
+<p>我们还是用people类的例子来看。<br>people.java代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.Serializable;</span><br><span class="line"></span><br><span class="line">public class People implements Serializable &#123;</span><br><span class="line">	private String name;</span><br><span class="line">	private int age;</span><br><span class="line"></span><br><span class="line">	public People(String name, int age)&#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">		this.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">	public People()&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setName(String name)&#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setAge(int age)&#123;</span><br><span class="line">		this.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public String getName()&#123;</span><br><span class="line">		return name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public int getAge()&#123;</span><br><span class="line">		return age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public String toString() &#123;</span><br><span class="line">		return &quot;People&#123;&quot; +</span><br><span class="line">		&quot;name=&#x27;&quot; + name + &#x27;\&#x27;&#x27; +</span><br><span class="line">		&quot;, age=&quot; + age +</span><br><span class="line">		&#x27;&#125;&#x27;;</span><br><span class="line">	&#125;</span><br><span class="line">	public void action(String name)&#123;</span><br><span class="line">		System.out.println(&quot;I bit &quot;+name+&quot;&#x27;s ass&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>反射的基础是Class类，它用于封装到被装入JVM中的类的信息，当一个类被装入到JVM中时会产生一个与之关联的java.lang.Class对象，通过这个Class对象对被装入的类的详细信息进行访问。<br>Reflection.java代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Constructor ppconstructor = clazz.getConstructor(String.class, int.class); //传入有参构造方法的类型的calss类的对象</span><br><span class="line">People p2 = (People) ppconstructor.newInstance(&quot;Marry&quot;, 11); //传值</span><br><span class="line">System.out.println(p2);</span><br><span class="line"></span><br><span class="line">//获取类的属性</span><br><span class="line">Field ppfield = clazz.getDeclaredField(&quot;name&quot;); //获取name属性，getDeclaredField表示获取（私有）属性，getDeclaredFields表示所有属性</span><br><span class="line">ppfield.setAccessible(true); //获取私有属性时设置</span><br><span class="line">ppfield.set(p2, &quot;Joe&quot;); //赋值</span><br><span class="line">System.out.println(p2);</span><br><span class="line"></span><br><span class="line">//获取类的方法</span><br><span class="line">Method method = clazz.getDeclaredMethod(&quot;action&quot;, String.class); //根据方法名获取类的方法，String.class表示方法参数类型</span><br><span class="line">method.invoke(p2, &quot;eat&quot;); //赋值</span><br><span class="line">Method[] methods = clazz.getDeclaredMethods(); //获取类的所有方法</span><br><span class="line">for(Method m: methods)&#123;</span><br><span class="line">System.out.println(m);</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>输出：<br><img src="/images/Image4.png" alt="img4"><br>可以看到，这里已经为类的属性成功赋值，并获取了类中的方法。</p>
 
                 
             </div>
@@ -448,7 +476,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://majorttt.github.io/2024/02/22/hello-world/">https://majorttt.github.io/2024/02/22/hello-world/</a>
+                    <a href="https://majorttt.github.io/2024/03/20/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80-%E5%8F%8D%E5%B0%84%E5%9F%BA%E7%A1%80/">https://majorttt.github.io/2024/03/20/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80-%E5%8F%8D%E5%B0%84%E5%9F%BA%E7%A1%80/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -485,7 +513,15 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Java%E5%AE%89%E5%85%A8/">
+                                    <span class="chip bg-color">Java安全</span>
+                                </a>
+                            
+                                <a href="/tags/%E4%BB%A3%E7%A0%81/">
+                                    <span class="chip bg-color">代码</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -529,9 +565,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/03/20/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80-%E5%8F%8D%E5%B0%84%E5%9F%BA%E7%A1%80/">
                     <div class="card-image">
@@ -549,9 +586,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-20
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-20
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -564,6 +601,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -583,7 +621,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2024/02/22/hello-world/">
@@ -613,7 +651,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
