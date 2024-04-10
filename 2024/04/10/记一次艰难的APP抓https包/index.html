@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="分类: Java安全, MajorT&#39;s Blog">
-    <meta name="description" content="MajorT&#39;s Blog">
+    <meta name="keywords" content="记一次艰难的APP抓https包, MajorT&#39;s Blog">
+    <meta name="description" content="永远不要放弃，因为成功可能就在下一秒。#前言这破包抓了我一天，期间各种组件出问题，模拟器更是卡到我自闭（平均不到一分钟卡一次，你就说疯不疯吧，反正我是疯了），好在最后功夫不负有心人，妈妈再也不用担心我抓不到apk的https包啦哈哈哈哈哈（">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>分类: Java安全 | MajorT&#39;s Blog</title>
+    <title>记一次艰难的APP抓https包 | MajorT&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -328,261 +328,437 @@
 
 </header>
 
-    <div class="bg-cover pd-header about-cover">
-    <div class="container">
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">记一次艰难的APP抓https包</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
     <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align">
-                
-                Just do it!
-                
-            </div>
-
-            <div class="description center-align">
-                
-                <span id="subtitle"></span>
-                <script src="/libs/typed/typed.js"></script>
-                <script>
-                    var typed = new Typed("#subtitle", {
-                        strings: [ 
-                            
-                                "不积硅步，无以至千里；不积小流，无以成江海",
-                            
-                        ],
-                        startDelay: 300,
-                        typeSpeed: 100,
-                        loop: true,
-                        backSpeed: 50,
-                        showCursor: true
-                    });
-                </script>
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<script>
-    // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
-    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
-</script>
-<script>
-    
-      var bannerUrl = "/medias/featureimages/" + Math.floor(Math.random() * 24) + '.jpg';
-    
-    $('.bg-cover.about-cover').css('background-image', 'url(' + bannerUrl + ')');
-
-</script>
-
-
-    </div>
-</div>
-
-<main class="content">
-
-    
-
-<div id="category-cloud" class="container chip-container">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
     <div class="card">
-        <div class="card-content">
-            <div class="tag-title center-align">
-                <i class="fas fa-bookmark"></i>&nbsp;&nbsp;文章分类
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Android%E6%B8%97%E9%80%8F/">
+                                <span class="chip bg-color">Android渗透</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%8A%93%E5%8C%85/">
+                                <span class="chip bg-color">抓包</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/APP%E6%B8%97%E9%80%8F/" class="post-category">
+                                APP渗透
+                            </a>
+                        
+                    </div>
+                    
+                </div>
             </div>
-            <div class="tag-chips">
+
+            <div class="post-info">
                 
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-04-10
+                </div>
                 
+
                 
-                <a href="/categories/Java%E5%AE%89%E5%85%A8/" title="Java安全: 3">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            style="background-color: #F9EBEA;">Java安全
-                        <span class="tag-length">3</span>
-                    </span>
-                </a>
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2024-04-10
+                </div>
                 
+
                 
-                <a href="/categories/APP%E6%B8%97%E9%80%8F/" title="APP渗透: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F5EEF8;">APP渗透
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1k
+                </div>
                 
+
                 
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
             </div>
         </div>
-    </div>
-</div>
+        <hr class="clearfix">
 
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p><em><strong>永远不要放弃，因为成功可能就在下一秒。</strong></em><br>#前言<br>这破包抓了我一天，期间各种组件出问题，模拟器更是卡到我自闭（平均不到一分钟卡一次，你就说疯不疯吧，反正我是疯了），好在最后功夫不负有心人，妈妈再也不用担心我抓不到apk的https包啦哈哈哈哈哈（人已疯），抓包成功后赶紧写篇笔记记下来，我的记忆力是靠不住的。自嘲.jpg<br>#环境准备<br>夜神模拟器7（Android9）   <a target="_blank" rel="noopener" href="https://en.bignox.com/">https://en.bignox.com/</a> （我下的海外版）<br>Fiddler<br>magisk   <a target="_blank" rel="noopener" href="https://huskydg.github.io/magisk-files/">https://huskydg.github.io/magisk-files/</a> （26.4）<br>LSPosed   <a target="_blank" rel="noopener" href="https://github.com/LSPosed/LSPosed/releases">https://github.com/LSPosed/LSPosed/releases</a>  （LSPosed-v1.9.2-7024-zygisk-release.zip)<br>算法助手    <a target="_blank" rel="noopener" href="https://github.com/Xposed-Modules-Repo/com.junge.algorithmaide/releases/tag/212-2.1.2">https://github.com/Xposed-Modules-Repo/com.junge.algorithmaide/releases/tag/212-2.1.2</a><br>#安装模拟器<br>这里就不赘述了（略）<br>#安装Magisk<br>安装之前确保模拟器开启root（国内的模拟器默认开启，国际版需要手动开启），保存设置后重启模拟器<br><img src="/images/4/Image1.png" alt="img1"><br>直接将下载的Magisk拖到模拟器安装<br><img src="/images/4/Image2.png" alt="img2"><br>永久记住并允许<br><img src="/images/4/Image3.png" alt="img3"><br>出现如下页面：<br><img src="/images/4/Image4.png" alt="img4"><br>这里先退出Magisk并清理后台，然后再次打开回到上述页面，点击右边的“安装”<br><img src="/images/4/Image5.png" alt="img5"><br><img src="/images/4/Image6.png" alt="img6"><br>直接下一步<br><img src="/images/4/Image7.png" alt="img7"><br>选择直接安装（直接修改&#x2F;system）（如果上一步不退出再重新打开的话，这里方式里面不会有后面两个选项）<br><img src="/images/4/Image8.png" alt="img8"><br><img src="/images/4/Image9.png" alt="img9"><br>不要直接点击右下角的重启（会卡住），叉掉模拟器选择重启<br>#安装LSPosed<br>模拟器重启后，选择右上角设置，打开Zygisk（然后重启）<br>将下载的LSPosed拖到模拟器中（所有弹窗点允许），在文件助手中可以看到，安卓路径为&#x2F;sdcard&#x2F;Picture<br><img src="/images/4/Image10.png" alt="img10"><br>打开Magisk<br><img src="/images/4/Image11.png" alt="img11"><br>模块-从本地安装-左上角三个杠-Amaze，在picture文件夹下选择刚才的压缩包<br><img src="/images/4/Image12.png" alt="img12"><br>点击确定<br><img src="/images/4/Image13.png" alt="img13"><br>重启（麻了）<br>解压缩LSPosed，将manager.apk拖到模拟器安装，打开弹窗点击确定即可<br><img src="/images/4/Image14.png" alt="img14"><br>#安装算法助手<br>拖到模拟器安装即可（略）<br>#Fiddler设置<br><img src="/images/4/Image15.png" alt="img15"><br><img src="/images/4/Image16.png" alt="img16"><br>#安装证书到根目录<br>导出fidder证书（Tools-Options-HTTPS-右边Actions-Export Root Certificate to Desktop)<br><img src="/images/4/Image17.png" alt="img17"><br>使用kali自带的openssl工具转换一下<br>openssl x509 -inform DER -in FiddlerRoot.cer -out cacert.pem<br>openssl x509 -inform PEM -subject_hash_old -in cacert.pem<br>然后重命名 mv cacert.pem 269953fb.0<br><img src="/images/4/Image18.png" alt="img18"><br>将重命名后的文件复制到物理机备用<br>模拟器右键，打开文件夹所在位置，目录下就有adb工具<br><img src="/images/4/Image19.png" alt="img19"><br>adb.exe devices 查看运行中的设备<br>adb.exe push C:\Users\MajorT\Desktop\269953fb.0 &#x2F;sdcard&#x2F; 将证书推入到sdcard中<br>adb.exe shell 进入shell交互模式<br>mount -o remount,rw &#x2F;system 重新挂载写入system<br>cp &#x2F;sdcard&#x2F;269953fb.0 &#x2F;system&#x2F;etc&#x2F;security&#x2F;cacerts&#x2F; 将证书复制到系统安全目录<br>chmod 644 &#x2F;system&#x2F;etc&#x2F;security&#x2F;cacerts&#x2F;269953fb.0 赋予证书读写权限<br>reboot 重启<br>重启完成后，打开设置-安全性和位置信息-加密与凭据-信任的凭据，可以看到fiddler证书安装成功<br><img src="/images/4/Image20.png" alt="img20"><br>#配置网络代理<br>代理ip为本机地址，端口为fiddler端口<br><img src="/images/4/Image21.png" alt="img21"><br>#抓包测试<br>装个知乎<br><img src="/images/4/Image22.png" alt="img22"><br>打开知乎，这里可以看到抓不到https的包<br><img src="/images/4/Image23.png" alt="img23"><br>打开LSPosed，在模块中启用算法助手，勾选知乎<br><img src="/images/4/Image24.png" alt="img24"><br>打开算法助手显示常见问题，后台退出后重新打开（确保模拟器开启了Root），勾选知乎，然后点击知乎，如下图设置<br><img src="/images/4/Image25.png" alt="img25"><br>后台退出知乎重新打开<br>哦耶~<br><img src="/images/4/Image26.png" alt="img26"><br>以上就是APP抓https包的全流程啦，按照本文的步骤基本不会出错，之前看的大多数文章都是使用JustTrustMe模块，我反正是没有成功。另外，我还尝试使用Postern做vpn全局代理模拟器抓包也没成功，也不知道是不是我的问题，老实人.jpg<br>#参考链接<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/Ruaki/article/details/135580772">https://blog.csdn.net/Ruaki/article/details/135580772</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_67695717/article/details/131772521">https://blog.csdn.net/m0_67695717/article/details/131772521</a><br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/13280?time__1311=mqmxnDBD9DyAw405DIYYK9eWu08ceOeT4D#toc-0">https://xz.aliyun.com/t/13280?time__1311=mqmxnDBD9DyAw405DIYYK9eWu08ceOeT4D#toc-0</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1KP41167LZ/?spm_id_from=333.999.0.0&vd_source=720f4a04de15c9a7120305b59cf4f7df">https://www.bilibili.com/video/BV1KP41167LZ/?spm_id_from=333.999.0.0&amp;vd_source=720f4a04de15c9a7120305b59cf4f7df</a></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">MajorT</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://majorttt.github.io/2024/04/10/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%89%B0%E9%9A%BE%E7%9A%84APP%E6%8A%93https%E5%8C%85/">https://majorttt.github.io/2024/04/10/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%89%B0%E9%9A%BE%E7%9A%84APP%E6%8A%93https%E5%8C%85/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">MajorT</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Android%E6%B8%97%E9%80%8F/">
+                                    <span class="chip bg-color">Android渗透</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%8A%93%E5%8C%85/">
+                                    <span class="chip bg-color">抓包</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
 
     
 
-    <article id="articles" class="container articles">
-        <div class="row tags-posts">
+</div>
+
+                </div>
+            </div>
             
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2024/03/26/CommonsCollections1%E9%93%BE%E6%89%8B%E5%86%99%E5%88%A9%E7%94%A8/">
-                        <div class="card-image tag-image">
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2024/04/10/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%89%B0%E9%9A%BE%E7%9A%84APP%E6%8A%93https%E5%8C%85/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="记一次艰难的APP抓https包">
+                        
+                        <span class="card-title">记一次艰难的APP抓https包</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-04-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/APP%E6%B8%97%E9%80%8F/" class="post-category">
+                                    APP渗透
+                                </a>
                             
                             
-                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="CommonsCollections1链手写利用">
-                            
-                            <span class="card-title">CommonsCollections1链手写利用</span>
-                        </div>
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Android%E6%B8%97%E9%80%8F/">
+                        <span class="chip bg-color">Android渗透</span>
                     </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
+                    
+                    <a href="/tags/%E6%8A%93%E5%8C%85/">
+                        <span class="chip bg-color">抓包</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2024/03/26/CommonsCollections1%E9%93%BE%E6%89%8B%E5%86%99%E5%88%A9%E7%94%A8/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="CommonsCollections1链手写利用">
+                        
+                        <span class="card-title">CommonsCollections1链手写利用</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
                             
-                                竹杖芒鞋轻胜马，何妨吟啸且徐行
-什么是CommonsCollections？Commons由三部分组成：Proper（是一些已发布的项目）、sandbox（是一些正在开发的项目）和Dormant（是一些刚启动或者已经停止维护的项目）。Com
-                            
-                        </div>
-                        <div class="publish-info">
+                        
+                    </div>
+                    <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2024-03-26
                             </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="post-category">
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="post-category">
                                     Java安全
                                 </a>
-                                
-                                
-                            </span>
-                        </div>
+                            
+                            
+                        </span>
                     </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Java%E5%AE%89%E5%85%A8/">
-                            <span class="chip bg-color">Java安全</span>
-                        </a>
-                        
-                        <a href="/tags/%E4%BB%A3%E7%A0%81/">
-                            <span class="chip bg-color">代码</span>
-                        </a>
-                        
-                    </div>
-                    
                 </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2024/03/22/urldns%E9%93%BE%E5%88%A9%E7%94%A8/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="urldns链利用">
-                            
-                            <span class="card-title">urldns链利用</span>
-                        </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">Java安全</span>
                     </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                天生我材必有用，千金散尽还复来
-三个部分反序列化调用主要分为三个部分，入口类，调用链，危险函数。入口类：含readObject()函数；调用链：入口类的readObject()函数中调用了其他类的函数，一层层调用下去，最终到达危险函数；危险
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-22
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="post-category">
-                                    Java安全
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
                     
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Java%E5%AE%89%E5%85%A8/">
-                            <span class="chip bg-color">Java安全</span>
-                        </a>
-                        
-                        <a href="/tags/%E4%BB%A3%E7%A0%81/">
-                            <span class="chip bg-color">代码</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2024/03/20/Java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%9F%BA%E7%A1%80-%E5%8F%8D%E5%B0%84%E5%9F%BA%E7%A1%80/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Java反序列化基础&amp;反射基础">
-                            
-                            <span class="card-title">Java反序列化基础&amp;反射基础</span>
-                        </div>
+                    <a href="/tags/%E4%BB%A3%E7%A0%81/">
+                        <span class="chip bg-color">代码</span>
                     </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                乘风破浪会有时，直挂云帆济沧海
-什么是序列化和反序列化？
-为了java对象在网络介质中传输，将其转化为字节流，并从字节流转化为对象的过程。
-
-下面举个栗子感受一下：1.首先需要创建一个被操作的类的对象编写一个people类：
-1234567
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-20
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="post-category">
-                                    Java安全
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Java%E5%AE%89%E5%85%A8/">
-                            <span class="chip bg-color">Java安全</span>
-                        </a>
-                        
-                        <a href="/tags/%E4%BB%A3%E7%A0%81/">
-                            <span class="chip bg-color">代码</span>
-                        </a>
-                        
-                    </div>
                     
                 </div>
+                
             </div>
-            
         </div>
-    </article>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
 </main>
 
 
