@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="JDK动态代理基础+cc1+cc6手写利用, MajorT&#39;s Blog">
     <meta name="description" content="大鹏一日同风起，扶摇直上九万里
-什么是动态代理？动态代理是java中的一种设计模式，简单来说，我们直接访问源对象，而是通过一个代理访问。代理模式可以在不修改被代理对象的基础上，通过扩展代理类，进行一些功能的附加与增强。代理类和被代理类应该共">
+什么是动态代理？动态代理是java中的一种设计模式，简单来说，我们不直接访问源对象，而是通过一个代理访问。代理模式可以在不修改被代理对象的基础上，通过扩展代理类，进行一些功能的附加与增强。代理类和被代理类应该">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -428,7 +428,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p><em><strong>大鹏一日同风起，扶摇直上九万里</strong></em></p>
-<h1><span id="什么是动态代理">什么是动态代理？</span></h1><p>动态代理是java中的一种设计模式，简单来说，我们直接访问源对象，而是通过一个代理访问。代理模式可以在不修改被代理对象的基础上，通过扩展代理类，进行一些功能的附加与增强。<br>代理类和被代理类应该共同实现一个接口，或者是共同继承某个类。<br>接下来看一些代码<br>首先是我们要被实现的接口IUser</p>
+<h1><span id="什么是动态代理">什么是动态代理？</span></h1><p>动态代理是java中的一种设计模式，简单来说，我们不直接访问源对象，而是通过一个代理访问。代理模式可以在不修改被代理对象的基础上，通过扩展代理类，进行一些功能的附加与增强。<br>代理类和被代理类应该共同实现一个接口，或者是共同继承某个类。<br>接下来看一些代码<br>首先是我们要被实现的接口IUser</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface IUser &#123;</span><br><span class="line">    public void show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>然后是实现IUser接口的类UserImpl</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class UserImpl implements IUser&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void show()&#123;</span><br><span class="line">        System.out.println(&quot;展示&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
